@@ -38,7 +38,7 @@ class _HomeSwiperState extends State<HomeSwiper> {
       children: widget.bannerData.isNotEmpty
           ? [
               Container(
-                padding: const EdgeInsets.fromLTRB(4, 4, 4, 10),
+                padding: const EdgeInsets.all(5),
                 height: 180,
                 color: const Color(0xfff2f4f5),
                 child: PageView.builder(
