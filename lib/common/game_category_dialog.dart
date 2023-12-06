@@ -8,9 +8,9 @@ import 'package:imitate_miyoushe/controllers/home.dart';
 class GameCategoryDialog extends Dialog {
   GameCategoryDialog({Key? key}) : super(key: key);
 
-  GlobalController globalController = Get.find();
-  GameTabsController gameTabsController = Get.find();
-  HomeController homeController = Get.find();
+  final GlobalController globalController = Get.find();
+  final GameTabsController gameTabsController = Get.find();
+  final HomeController homeController = Get.find();
 
   @override
   Widget build(BuildContext context) {
