@@ -11,12 +11,6 @@ class HomeArticle extends StatefulWidget {
 }
 
 class _HomeArticleState extends State<HomeArticle> {
-  void getArticleData() async {
-    // await Request.requestGet('/post/wapi/getPostFull', params: {
-    //   'gids': '${widget.currentGameCategory['id']}',
-    // });
-  }
-
   @override
   void initState() {
     super.initState();
@@ -33,8 +27,10 @@ class _HomeArticleState extends State<HomeArticle> {
         children: [
           InkWell(
             onTap: () {
-              MyRouter.push(MyRouter.articleDetails,
-                  {'id': widget.itemData['post']['post_id']});
+              MyRouter.push(
+                MyRouter.articleDetails,
+                {'id': widget.itemData['post']['post_id']},
+              );
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

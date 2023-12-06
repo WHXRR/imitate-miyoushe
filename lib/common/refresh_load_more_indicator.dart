@@ -104,6 +104,7 @@ class _RefreshLoadMoreIndicatorState extends State<RefreshLoadMoreIndicator> {
             child: ListView.builder(
               controller: _scrollController,
               itemCount: widget.itemCount + 1,
+              physics: const AlwaysScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 if (index == widget.itemCount) {
                   if (_loadingMoreState == LoadingMoreState.loading) {

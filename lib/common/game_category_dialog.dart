@@ -3,12 +3,14 @@ import '../utils/game_category_data.dart';
 import 'package:get/get.dart';
 import 'package:imitate_miyoushe/controllers/global.dart';
 import 'package:imitate_miyoushe/controllers/game_tabs.dart';
+import 'package:imitate_miyoushe/controllers/home.dart';
 
 class GameCategoryDialog extends Dialog {
   GameCategoryDialog({Key? key}) : super(key: key);
 
   GlobalController globalController = Get.find();
   GameTabsController gameTabsController = Get.find();
+  HomeController homeController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +20,9 @@ class GameCategoryDialog extends Dialog {
           onTap: () {
             globalController.selectGameCategory(e);
             gameTabsController.retrieveGameData();
+            homeController.bannerData.value = [];
+            homeController.homeDataPost.value = [];
+            homeController.getData();
             Navigator.pop(context);
           },
           child: Column(

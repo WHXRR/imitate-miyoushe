@@ -28,7 +28,6 @@ class GameTabsController extends GetxController
     tabController = TabController(length: categoryList.length, vsync: this);
     tabController.addListener(() {
       if (tabController.animation?.value == tabController.index) {
-        print(tabController.index);
         currentTab.value = tabController.index;
       }
     });

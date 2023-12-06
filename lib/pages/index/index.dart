@@ -12,6 +12,7 @@ class Index extends GetView<GlobalController> {
       appBar: AppBar(
         toolbarHeight: 40,
         backgroundColor: const Color(0xff1f2233),
+        leadingWidth: 33,
         leading: Padding(
           padding: const EdgeInsets.only(left: 10),
           child: InkWell(
@@ -24,7 +25,6 @@ class Index extends GetView<GlobalController> {
             ),
           ),
         ),
-        leadingWidth: 33,
         actions: [
           const Padding(
             padding: EdgeInsets.only(right: 10),

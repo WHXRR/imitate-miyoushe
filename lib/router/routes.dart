@@ -1,7 +1,10 @@
 import 'package:get/get.dart';
-import '../pages/index/index.dart';
+
+import 'package:imitate_miyoushe/pages/index/index.dart';
 import 'package:imitate_miyoushe/pages/article/article_details.dart';
+
 import 'package:imitate_miyoushe/binding/index.dart';
+import 'package:imitate_miyoushe/binding/article_details.dart';
 
 class MyRouter {
   static const String home = "/";
@@ -22,6 +25,7 @@ class MyRouter {
     GetPage(
       name: articleDetails,
       page: () => const ArticleDetails(),
+      binding: ArticleDetailsBinding(),
     ),
   ];
 }
