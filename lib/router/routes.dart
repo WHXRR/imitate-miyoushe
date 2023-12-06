@@ -8,9 +8,10 @@ import 'package:imitate_miyoushe/binding/article_details.dart';
 
 class MyRouter {
   static const String home = "/";
+  static const String articleDetails = "/articleDetails";
+
   static const String login = "/login";
   static const String register = "/register";
-  static const String articleDetails = "/articleDetails";
 
   static push(String page, [dynamic arguments]) {
     return Get.toNamed(page, arguments: arguments);

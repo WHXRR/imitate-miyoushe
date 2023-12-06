@@ -11,6 +11,7 @@ class ArticleDetailsController extends GetxController {
 
   // 获取文章详情
   void getArticleData() async {
+    Loading.showLoading();
     var jsonResponse =
         await Request.requestGet('/post/wapi/getPostFull', params: {
       'gids': '${globalController.currentGameCategory['id']}',
@@ -25,7 +26,6 @@ class ArticleDetailsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    Loading.showLoading();
     getArticleData();
   }
 }

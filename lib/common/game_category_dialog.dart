@@ -28,15 +28,23 @@ class GameCategoryDialog extends Dialog {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(6),
-                child: Image.asset(e["src"]),
+              SizedBox(
+                width: 52,
+                height: 52,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(6),
+                  child: Image.asset(e["src"]),
+                ),
               ),
               const SizedBox(height: 2),
-              Text(
-                '${e["name"]}',
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(fontSize: 10),
+              SizedBox(
+                width: 50,
+                child: Text(
+                  '${e["name"]}',
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 10),
+                ),
               )
             ],
           ),
@@ -59,14 +67,18 @@ class GameCategoryDialog extends Dialog {
                         bottomLeft: Radius.circular(10),
                         bottomRight: Radius.circular(10))),
                 padding: const EdgeInsets.all(15),
-                height: 190,
-                child: GridView.count(
-                  crossAxisCount: 5,
-                  crossAxisSpacing: 15,
-                  mainAxisSpacing: 10,
-                  childAspectRatio: 0.7,
+                child: Wrap(
+                  spacing: 17,
+                  runSpacing: 15,
                   children: _initGameCategoryList(),
                 ),
+                // GridView.count(
+                //   crossAxisCount: 5,
+                //   crossAxisSpacing: 15,
+                //   mainAxisSpacing: 10,
+                //   childAspectRatio: 0.7,
+                //   children: _initGameCategoryList(),
+                // )
               ),
             )
           ],

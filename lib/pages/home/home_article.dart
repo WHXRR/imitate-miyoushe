@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:imitate_miyoushe/utils/formatTime.dart';
 import 'package:imitate_miyoushe/router/routes.dart';
+import 'package:imitate_miyoushe/common/triple_like.dart';
+import 'package:imitate_miyoushe/common/image_preview_screen.dart';
 
 class HomeArticle extends StatefulWidget {
   final Map itemData;
@@ -11,9 +13,28 @@ class HomeArticle extends StatefulWidget {
 }
 
 class _HomeArticleState extends State<HomeArticle> {
+  List<String> imgLists = [];
+  int initialIndex = 0;
+
+  void previewImg(img) {
+    initialIndex = imgLists.indexWhere((element) => element == img);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ImagePreviewScreen(
+          imageUrls: imgLists,
+          initialIndex: initialIndex,
+        ),
+      ),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
+    imgLists = List.from(widget.itemData['image_list'])
+        .map((e) => e['url'].toString())
+        .toList();
   }
 
   @override
@@ -150,11 +171,19 @@ class _HomeArticleState extends State<HomeArticle> {
                       children: List.from(widget.itemData['image_list'])
                           .take(3)
                           .map((img) {
-                        return ClipRRect(
-                          borderRadius: BorderRadius.circular(5),
-                          child: Image.network(
-                            img['url'],
-                            fit: BoxFit.cover,
+                        return GestureDetector(
+                          onTap: () {
+                            previewImg(img['url']);
+                          },
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(5),
+                            child: Hero(
+                              tag: img['url'],
+                              child: Image.network(
+                                img['url'],
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           ),
                         );
                       }).toList()),
@@ -182,73 +211,9 @@ class _HomeArticleState extends State<HomeArticle> {
             margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
             color: const Color(0xfff0f4f5),
           ),
-          Row(
-            children: [
-              Expanded(
-                  flex: 1,
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(
-                          Icons.remove_red_eye_outlined,
-                          color: Color(0xff999999),
-                          size: 17,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          '${widget.itemData['stat2'] == null ? widget.itemData['stat']['view_num'] : widget.itemData['stat2']['view_num']}',
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Color(0xff999999),
-                          ),
-                        )
-                      ])),
-              Expanded(
-                  flex: 1,
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(
-                          Icons.comment_outlined,
-                          color: Color(0xff999999),
-                          size: 17,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          '${widget.itemData['stat2'] == null ? widget.itemData['stat']['reply_num'] : widget.itemData['stat2']['reply_num']}',
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Color(0xff999999),
-                          ),
-                        )
-                      ])),
-              Expanded(
-                  flex: 1,
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(
-                          Icons.thumb_up_outlined,
-                          color: Color(0xff999999),
-                          size: 17,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          '${widget.itemData['stat2'] == null ? widget.itemData['stat']['like_num'] : widget.itemData['stat2']['like_num']}',
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Color(0xff999999),
-                          ),
-                        )
-                      ])),
-            ],
-          )
+          TripleLike(
+            numberData: widget.itemData['stat2'] ?? widget.itemData['stat'],
+          ),
         ],
       ),
     );

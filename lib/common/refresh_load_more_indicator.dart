@@ -53,7 +53,10 @@ class _RefreshLoadMoreIndicatorState extends State<RefreshLoadMoreIndicator> {
               : Container(),
           Padding(
             padding: const EdgeInsets.only(left: 10),
-            child: Text(text),
+            child: Text(
+              text,
+              style: const TextStyle(color: Color(0xff999999)),
+            ),
           )
         ],
       ),
