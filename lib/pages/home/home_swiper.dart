@@ -1,10 +1,10 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:imitate_miyoushe/controllers/home.dart';
 
 class HomeSwiper extends StatefulWidget {
-  final List bannerData;
-  const HomeSwiper({Key? key, required this.bannerData}) : super(key: key);
+  const HomeSwiper({Key? key}) : super(key: key);
 
   @override
   _HomeSwiperState createState() => _HomeSwiperState();
@@ -15,6 +15,7 @@ class _HomeSwiperState extends State<HomeSwiper> {
   List _list = [];
   late PageController _pageController;
   late Timer _timer;
+  HomeController homeController = Get.find();
 
   @override
   void initState() {
@@ -34,54 +35,57 @@ class _HomeSwiperState extends State<HomeSwiper> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: widget.bannerData.isNotEmpty
-          ? [
-              Container(
-                padding: const EdgeInsets.all(5),
-                height: 180,
-                color: const Color(0xfff2f4f5),
-                child: PageView.builder(
-                    controller: _pageController,
-                    onPageChanged: (value) {
-                      setState(() {
-                        _currentIndex = value % _list.length;
-                      });
-                    },
-                    itemCount: 1000,
-                    itemBuilder: (context, index) {
-                      _list = widget.bannerData.map((item) {
-                        return ClipRRect(
-                          borderRadius: BorderRadius.circular(7),
-                          child:
-                              Image.network(item['cover'], fit: BoxFit.cover),
+    return Obx(
+      () => Stack(
+        children: homeController.bannerData.isNotEmpty
+            ? [
+                Container(
+                  padding: const EdgeInsets.all(5),
+                  height: 180,
+                  color: const Color(0xfff2f4f5),
+                  child: PageView.builder(
+                      controller: _pageController,
+                      onPageChanged: (value) {
+                        setState(() {
+                          _currentIndex = value % _list.length;
+                        });
+                      },
+                      itemCount: 1000,
+                      itemBuilder: (context, index) {
+                        _list = homeController.bannerData.map((item) {
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(7),
+                            child:
+                                Image.network(item['cover'], fit: BoxFit.cover),
+                          );
+                        }).toList();
+                        return _list[index % _list.length];
+                      }),
+                ),
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 15,
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(homeController.bannerData.length,
+                          (index) {
+                        return Container(
+                          width: 10,
+                          height: 10,
+                          margin: const EdgeInsets.all(3),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: index == _currentIndex
+                                ? Colors.white
+                                : Colors.white70,
+                          ),
                         );
-                      }).toList();
-                      return _list[index % _list.length];
-                    }),
-              ),
-              Positioned(
-                left: 0,
-                right: 0,
-                bottom: 15,
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(widget.bannerData.length, (index) {
-                      return Container(
-                        width: 10,
-                        height: 10,
-                        margin: const EdgeInsets.all(3),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: index == _currentIndex
-                              ? Colors.white
-                              : Colors.white70,
-                        ),
-                      );
-                    })),
-              )
-            ]
-          : [],
+                      })),
+                )
+              ]
+            : [],
+      ),
     );
   }
 }

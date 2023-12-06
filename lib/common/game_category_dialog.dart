@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import '../utils/game_category_data.dart';
+import 'package:get/get.dart';
+import 'package:imitate_miyoushe/controllers/global.dart';
+import 'package:imitate_miyoushe/controllers/game_tabs.dart';
 
 class GameCategoryDialog extends Dialog {
-  final Map currentGameCategory;
-  final void Function(Map)? cb;
-  const GameCategoryDialog(
-      {Key? key, required this.currentGameCategory, this.cb})
-      : super(key: key);
+  GameCategoryDialog({Key? key}) : super(key: key);
+
+  GlobalController globalController = Get.find();
+  GameTabsController gameTabsController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +16,8 @@ class GameCategoryDialog extends Dialog {
       return gameCategoryData.map((e) {
         return InkWell(
           onTap: () {
-            cb!(e);
+            globalController.selectGameCategory(e);
+            gameTabsController.retrieveGameData();
             Navigator.pop(context);
           },
           child: Column(

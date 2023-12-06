@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import './home_article.dart';
-import '../../common/keep_alive_wrapper.dart';
-import '../../http/request.dart';
-import '../../common/loading.dart';
-import '../../common/refresh_load_more_indicator.dart';
+import 'package:imitate_miyoushe/common/keep_alive_wrapper.dart';
+import 'package:imitate_miyoushe/http/request.dart';
+import 'package:imitate_miyoushe/common/loading.dart';
+import 'package:imitate_miyoushe/common/refresh_load_more_indicator.dart';
+import 'package:get/get.dart';
+import 'package:imitate_miyoushe/controllers/global.dart';
 
 class HomeOther extends StatefulWidget {
-  final Map currentGameCategory;
   final Map currentTab;
   const HomeOther({
     Key? key,
-    required this.currentGameCategory,
     required this.currentTab,
   }) : super(key: key);
 
@@ -21,12 +21,13 @@ class HomeOther extends StatefulWidget {
 class _HomeOtherState extends State<HomeOther> {
   Map<String, dynamic> postDataMap = {};
   List homeDataPost = [];
+  GlobalController globalController = Get.find();
 
   Future<LoadingMoreState> getData() async {
     // 获取帖子数据
     var jsonResponse =
         await Request.requestGet('/post/wapi/getForumPostList', params: {
-      'gids': '${widget.currentGameCategory['id']}',
+      'gids': '${globalController.currentGameCategory['id']}',
       'forum_id': '${widget.currentTab['id']}',
       'page_size': '10',
       'sort_type': '1',
@@ -48,7 +49,7 @@ class _HomeOtherState extends State<HomeOther> {
       // 获取帖子数据
       var jsonResponse =
           await Request.requestGet('/post/wapi/getForumPostList', params: {
-        'gids': '${widget.currentGameCategory['id']}',
+        'gids': '${globalController.currentGameCategory['id']}',
         'forum_id': '${widget.currentTab['id']}',
         'last_id': '${postDataMap['last_id']}',
         'page_size': '10',
@@ -68,7 +69,7 @@ class _HomeOtherState extends State<HomeOther> {
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () {
-      Loading.showLoading(context);
+      Loading.showLoading();
       getData();
     });
   }
@@ -81,7 +82,15 @@ class _HomeOtherState extends State<HomeOther> {
         child: RefreshLoadMoreIndicator(
           itemCount: 1,
           itemBuilder: (context, index) {
-            return HomeArticle(homeDataPost: homeDataPost);
+            return Column(
+              children: homeDataPost.isNotEmpty
+                  ? homeDataPost.map((item) {
+                      return HomeArticle(
+                        itemData: item,
+                      );
+                    }).toList()
+                  : [],
+            );
           },
           onRefresh: () async {
             setState(() {

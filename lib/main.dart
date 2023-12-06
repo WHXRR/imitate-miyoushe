@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import './pages/index/index.dart';
+import './router/routes.dart';
+import 'package:imitate_miyoushe/binding/global.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 void main() {
-  runApp(
-      const GetMaterialApp(debugShowCheckedModeBanner: false, home: Index()));
+  WidgetsFlutterBinding.ensureInitialized();
+
+  runApp(GetMaterialApp(
+    debugShowCheckedModeBanner: false,
+    defaultTransition: Transition.rightToLeft,
+    getPages: MyRouter.routes,
+    initialRoute: MyRouter.home,
+    initialBinding: GlobalBinding(),
+    builder: EasyLoading.init(),
+  ));
 }

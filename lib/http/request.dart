@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import './api.dart';
+import 'baseurl.dart';
 
 class Request {
   static Future requestGet(url,
-      {String baseurl = '', required Map<String, dynamic> params}) async {
+      {String baseurl = '', Map<String, dynamic>? params}) async {
     late String base;
     base = (baseurl.isEmpty ? baseURL['url1'] : baseurl)!;
     var api = Uri.https(base, url, params);

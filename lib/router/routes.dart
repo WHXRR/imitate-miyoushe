@@ -1,0 +1,27 @@
+import 'package:get/get.dart';
+import '../pages/index/index.dart';
+import 'package:imitate_miyoushe/pages/article/article_details.dart';
+import 'package:imitate_miyoushe/binding/index.dart';
+
+class MyRouter {
+  static const String home = "/";
+  static const String login = "/login";
+  static const String register = "/register";
+  static const String articleDetails = "/articleDetails";
+
+  static push(String page, [dynamic arguments]) {
+    return Get.toNamed(page, arguments: arguments);
+  }
+
+  static final routes = [
+    GetPage(
+      name: home,
+      page: () => Index(),
+      binding: IndexBinding(),
+    ),
+    GetPage(
+      name: articleDetails,
+      page: () => const ArticleDetails(),
+    ),
+  ];
+}
