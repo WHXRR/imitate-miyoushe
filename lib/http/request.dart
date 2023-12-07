@@ -10,9 +10,10 @@ class Request {
   }) async {
     late String base;
     base = (baseurl.isEmpty ? baseURL['url1'] : baseurl)!;
-    var api = Uri.https(base, url, params);
+    final uri = Uri.parse('$base$url').replace(queryParameters: params);
+    // var uri = Uri.https(base, url, params);
     final response = await http.get(
-      api,
+      uri,
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
         'Cookie':

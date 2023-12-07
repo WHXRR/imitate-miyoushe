@@ -72,13 +72,6 @@ class GameCategoryDialog extends Dialog {
                   runSpacing: 15,
                   children: _initGameCategoryList(),
                 ),
-                // GridView.count(
-                //   crossAxisCount: 5,
-                //   crossAxisSpacing: 15,
-                //   mainAxisSpacing: 10,
-                //   childAspectRatio: 0.7,
-                //   children: _initGameCategoryList(),
-                // )
               ),
             )
           ],
