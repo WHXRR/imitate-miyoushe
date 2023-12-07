@@ -8,17 +8,61 @@ class ArticleDetailsController extends GetxController {
 
   RxBool loadingCompleted = false.obs;
   RxMap articleData = {}.obs;
+  RxBool onlyMaster = false.obs;
+  RxInt orderType = 0.obs;
+  RxMap commentData = {}.obs;
+  RxList commentList = [].obs;
 
   // 获取文章详情
-  void getArticleData() async {
-    Loading.showLoading();
-    var jsonResponse =
-        await Request.requestGet('/post/wapi/getPostFull', params: {
+  Future getArticleData() {
+    return Request.requestGet('/post/wapi/getPostFull', params: {
       'gids': '${globalController.currentGameCategory['id']}',
       'read': '1',
       'post_id': Get.arguments['id'],
     });
-    articleData.value = jsonResponse['data']['post'];
+  }
+
+  Future getArticleComments() {
+    var params = {
+      'gids': '${globalController.currentGameCategory['id']}',
+      'post_id': Get.arguments['id'],
+      'size': '20',
+      'only_master': '${onlyMaster.value}',
+      'is_hot': '${orderType.value == 0}',
+    };
+    if (orderType.value != 0) {
+      params['order_type'] = '${orderType.value}';
+    } else {
+      if (onlyMaster.value) {
+        params['order_type'] = '1';
+        params['is_hot'] = 'false';
+      }
+    }
+    if (commentData['is_last'] != null && !commentData['is_last']) {
+      params['last_id'] = commentData['last_id'];
+    }
+    return Request.requestGet('/post/wapi/getPostReplies', params: params);
+  }
+
+  void getComments() async {
+    commentData.value = {};
+    commentList.value = [];
+    var res1 = await getArticleComments();
+    commentData.value = res1['data'];
+    commentList.value = res1['data']['list'];
+  }
+
+  void getData() async {
+    Loading.showLoading();
+    articleData.value = {};
+    commentData.value = {};
+    commentList.value = [];
+    loadingCompleted.value = false;
+    var res1 = await getArticleData();
+    var res2 = await getArticleComments();
+    articleData.value = res1['data']['post'];
+    commentData.value = res2['data'];
+    commentList.value = res2['data']['list'];
     loadingCompleted.value = true;
     Loading.hideLoading();
   }
@@ -26,6 +70,6 @@ class ArticleDetailsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getArticleData();
+    getData();
   }
 }

@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imitate_miyoushe/controllers/article_details.dart';
 import 'package:imitate_miyoushe/common/refresh_load_more_indicator.dart';
-import 'article_details_user.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:imitate_miyoushe/utils/formatTime.dart';
 import 'package:imitate_miyoushe/common/article_details_triple_like.dart';
+import 'article_details_user.dart';
+import 'article_details_comment.dart';
 
 class ArticleDetails extends GetView<ArticleDetailsController> {
   const ArticleDetails({Key? key}) : super(key: key);
@@ -33,6 +34,18 @@ class ArticleDetails extends GetView<ArticleDetailsController> {
               color: Colors.white,
               child: RefreshLoadMoreIndicator(
                 itemCount: 1,
+                onLoadMore: () async {
+                  if (controller.commentData['is_last']) {
+                    return LoadingMoreState.noData;
+                  }
+                  var res = await controller.getArticleComments();
+                  controller.commentData.value = res['data'];
+                  controller.commentList.addAll(res['data']['list']);
+                  return LoadingMoreState.complete;
+                },
+                onRefresh: () async {
+                  controller.getData();
+                },
                 itemBuilder: (context, index) {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,9 +82,27 @@ class ArticleDetails extends GetView<ArticleDetailsController> {
                       Html(
                         data: '${controller.articleData['post']['content']}',
                       ),
+                      Wrap(
+                        children: List.from(controller.articleData['topics'])
+                            .map((v) {
+                          return Container(
+                            padding: const EdgeInsets.fromLTRB(5, 2, 5, 2),
+                            margin: const EdgeInsets.fromLTRB(0, 7, 10, 0),
+                            decoration: BoxDecoration(
+                              color: const Color(0xffedf6fc),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Text(
+                              v['name'],
+                              style: const TextStyle(
+                                  color: Color(0xff00b2ff), fontSize: 10),
+                            ),
+                          );
+                        }).toList(),
+                      ),
                       Container(
                         padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                        margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                        margin: const EdgeInsets.fromLTRB(0, 10, 0, 5),
                         decoration: const BoxDecoration(
                             border: Border(
                           top: BorderSide(
@@ -84,14 +115,9 @@ class ArticleDetails extends GetView<ArticleDetailsController> {
                         child: ArticleDetailsTripleLike(
                             numberData: controller.articleData['stat']),
                       ),
+                      const ArticleDetailsComment(),
                     ],
                   );
-                },
-                onLoadMore: () async {
-                  return LoadingMoreState.noData;
-                },
-                onRefresh: () async {
-                  controller.getArticleData();
                 },
               ),
             ),

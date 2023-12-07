@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './home_article.dart';
+import '../article/home_article.dart';
 import 'package:imitate_miyoushe/common/keep_alive_wrapper.dart';
 import 'package:imitate_miyoushe/http/request.dart';
 import 'package:imitate_miyoushe/common/loading.dart';
