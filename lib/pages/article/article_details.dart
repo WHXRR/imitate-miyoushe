@@ -7,6 +7,7 @@ import 'package:imitate_miyoushe/utils/formatTime.dart';
 import 'package:imitate_miyoushe/common/article_details_triple_like.dart';
 import 'article_details_user.dart';
 import 'article_details_comment.dart';
+import 'package:imitate_miyoushe/common/cache_image.dart';
 
 class ArticleDetails extends GetView<ArticleDetailsController> {
   const ArticleDetails({Key? key}) : super(key: key);
@@ -59,7 +60,7 @@ class ArticleDetails extends GetView<ArticleDetailsController> {
                         ),
                       ),
                       const SizedBox(
-                        height: 5,
+                        height: 10,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -77,11 +78,37 @@ class ArticleDetails extends GetView<ArticleDetailsController> {
                         ],
                       ),
                       const SizedBox(
-                        height: 5,
+                        height: 10,
                       ),
-                      Html(
-                        data: '${controller.articleData['post']['content']}',
-                      ),
+                      Get.arguments['showType'] == '4'
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                  Text(controller.articleContent.value),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Column(
+                                    children:
+                                        controller.articleImages.map((item) {
+                                      return Column(
+                                        children: [
+                                          CacheImage(imageUrl: item),
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                        ],
+                                      );
+                                    }).toList(),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                ])
+                          : Html(
+                              data:
+                                  '${controller.articleData['post']['content']}',
+                            ),
                       Wrap(
                         children: List.from(controller.articleData['topics'])
                             .map((v) {

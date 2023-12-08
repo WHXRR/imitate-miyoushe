@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imitate_miyoushe/controllers/home.dart';
+import 'package:imitate_miyoushe/common/cache_image.dart';
 
 class HomeSwiper extends StatefulWidget {
   const HomeSwiper({Key? key}) : super(key: key);
@@ -55,8 +56,9 @@ class _HomeSwiperState extends State<HomeSwiper> {
                         _list = homeController.bannerData.map((item) {
                           return ClipRRect(
                             borderRadius: BorderRadius.circular(7),
-                            child:
-                                Image.network(item['cover'], fit: BoxFit.cover),
+                            child: CacheImage(
+                              imageUrl: item['cover'],
+                            ),
                           );
                         }).toList();
                         return _list[index % _list.length];

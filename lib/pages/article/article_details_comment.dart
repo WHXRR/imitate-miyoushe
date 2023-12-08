@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imitate_miyoushe/controllers/article_details.dart';
 import 'package:imitate_miyoushe/utils/formatTime.dart';
+import 'package:imitate_miyoushe/common/cache_image.dart';
 
 class ArticleDetailsComment extends GetView<ArticleDetailsController> {
   const ArticleDetailsComment({Key? key}) : super(key: key);
@@ -166,8 +167,9 @@ class ArticleDetailsComment extends GetView<ArticleDetailsController> {
                             margin: const EdgeInsets.only(right: 10),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(15),
-                              child: Image.network(item['user']['avatar_url'],
-                                  fit: BoxFit.cover),
+                              child: CacheImage(
+                                imageUrl: item['user']['avatar_url'],
+                              ),
                             ),
                           ),
                           Expanded(

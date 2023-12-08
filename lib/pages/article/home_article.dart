@@ -3,6 +3,7 @@ import 'package:imitate_miyoushe/utils/formatTime.dart';
 import 'package:imitate_miyoushe/router/routes.dart';
 import 'package:imitate_miyoushe/common/triple_like.dart';
 import 'package:imitate_miyoushe/common/image_preview_screen.dart';
+import 'package:imitate_miyoushe/common/cache_image.dart';
 
 class HomeArticle extends StatefulWidget {
   final Map itemData;
@@ -63,9 +64,9 @@ class _HomeArticleState extends State<HomeArticle> {
                       margin: const EdgeInsets.only(right: 10),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(15),
-                        child: Image.network(
-                            widget.itemData['user']['avatar_url'],
-                            fit: BoxFit.cover),
+                        child: CacheImage(
+                          imageUrl: widget.itemData['user']['avatar_url'],
+                        ),
                       )),
                   Expanded(
                       flex: 1,
@@ -179,9 +180,8 @@ class _HomeArticleState extends State<HomeArticle> {
                             borderRadius: BorderRadius.circular(5),
                             child: Hero(
                               tag: img['url'],
-                              child: Image.network(
-                                img['url'],
-                                fit: BoxFit.cover,
+                              child: CacheImage(
+                                imageUrl: img['url'],
                               ),
                             ),
                           ),

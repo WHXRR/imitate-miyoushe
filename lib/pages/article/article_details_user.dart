@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imitate_miyoushe/controllers/article_details.dart';
+import 'package:imitate_miyoushe/common/cache_image.dart';
 
 class ArticleDetailsUser extends GetView<ArticleDetailsController> {
   const ArticleDetailsUser({Key? key}) : super(key: key);
@@ -20,9 +21,9 @@ class ArticleDetailsUser extends GetView<ArticleDetailsController> {
                 margin: const EdgeInsets.only(right: 10),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15),
-                  child: Image.network(
-                      controller.articleData['user']['avatar_url'],
-                      fit: BoxFit.cover),
+                  child: CacheImage(
+                    imageUrl: controller.articleData['user']['avatar_url'],
+                  ),
                 )),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

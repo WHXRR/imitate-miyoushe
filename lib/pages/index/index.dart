@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../game_tabs/game_tabs.dart';
 import 'package:imitate_miyoushe/controllers/global.dart';
+import 'package:imitate_miyoushe/utils/download_apk.dart';
+import 'package:imitate_miyoushe/common/cache_image.dart';
 
 class Index extends GetView<GlobalController> {
   const Index({Key? key}) : super(key: key);
@@ -28,6 +30,10 @@ class Index extends GetView<GlobalController> {
         actions: [
           const Padding(
             padding: EdgeInsets.only(right: 10),
+            child: DownloadAPK(),
+          ),
+          const Padding(
+            padding: EdgeInsets.only(right: 10),
             child: Icon(Icons.search, size: 21),
           ),
           const Padding(
@@ -35,11 +41,15 @@ class Index extends GetView<GlobalController> {
             child: Icon(Icons.sms_outlined, size: 21),
           ),
           Padding(
-              padding: const EdgeInsets.fromLTRB(0, 8, 10, 8),
-              child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Image.network(
-                      'https://bbs-static.miyoushe.com/communityweb/upload/222b847170feb3f2babcc1bd4f0e30dd.png')))
+            padding: const EdgeInsets.fromLTRB(0, 8, 10, 8),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: const CacheImage(
+                imageUrl:
+                    'https://bbs-static.miyoushe.com/communityweb/upload/222b847170feb3f2babcc1bd4f0e30dd.png',
+              ),
+            ),
+          )
         ],
         title: Obx(
           () => Text(
