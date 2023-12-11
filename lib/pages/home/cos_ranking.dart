@@ -4,6 +4,7 @@ import 'package:imitate_miyoushe/controllers/global.dart';
 import 'package:imitate_miyoushe/http/request.dart';
 import 'package:imitate_miyoushe/common/loading.dart';
 import 'package:imitate_miyoushe/common/cache_image.dart';
+import 'package:imitate_miyoushe/router/routes.dart';
 
 class CosRanking extends StatefulWidget {
   final Map currentTab;
@@ -26,7 +27,7 @@ class _CosRankingState extends State<CosRanking> {
     });
     setState(() {
       rankData = jsonResponse['data'];
-      cosRanking = List.from(jsonResponse['data']['list']).take(3).toList();
+      cosRanking = List.from(jsonResponse['data']['list']).toList();
     });
     Loading.hideLoading();
   }
@@ -45,28 +46,38 @@ class _CosRankingState extends State<CosRanking> {
     return rankData.isNotEmpty
         ? Container(
             color: Colors.white,
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(
-                rankData['title'],
-                style: const TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.bold,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  rankData['title'],
+                  style: const TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 5),
-                height: 115,
-                child: GridView.count(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 7,
-                    physics: const NeverScrollableScrollPhysics(),
+                const SizedBox(
+                  height: 10,
+                ),
+                SizedBox(
+                  height: 115,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
                     children: cosRanking.map((img) {
                       return GestureDetector(
                         onTap: () {
-                          // previewImg(img['url']);
+                          MyRouter.push(
+                            MyRouter.articleDetails,
+                            {
+                              'id': img['post']['post_id'],
+                              'showType': widget.currentTab['show_type'],
+                            },
+                          );
                         },
                         child: Container(
+                          height: 115,
+                          width: 115,
+                          margin: const EdgeInsets.only(right: 5),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
                             border: Border.all(
@@ -75,18 +86,65 @@ class _CosRankingState extends State<CosRanking> {
                           ),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(5),
-                            child: Hero(
-                              tag: img['cover']['url'],
-                              child: CacheImage(
-                                imageUrl: img['cover']['url'],
-                              ),
+                            child: Stack(
+                              children: [
+                                SizedBox(
+                                  height: 115,
+                                  width: 115,
+                                  child: CacheImage(
+                                    imageUrl: img['cover']['url'],
+                                  ),
+                                ),
+                                Positioned(
+                                  left: 0,
+                                  right: 0,
+                                  bottom: 0,
+                                  child: Container(
+                                    height: 25,
+                                    padding: const EdgeInsets.all(3),
+                                    decoration: BoxDecoration(
+                                      color: Colors.black.withOpacity(0.5),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        SizedBox(
+                                          width: 20,
+                                          height: 20,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            child: CacheImage(
+                                              imageUrl: img['user']
+                                                  ['avatar_url'],
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 5,
+                                        ),
+                                        Text(
+                                          img['user']['nickname'],
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 12,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ],
                             ),
                           ),
                         ),
                       );
-                    }).toList()),
-              )
-            ]),
+                    }).toList(),
+                  ),
+                )
+              ],
+            ),
           )
         : Container();
   }
