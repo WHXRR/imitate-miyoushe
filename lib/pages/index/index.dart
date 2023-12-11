@@ -42,11 +42,15 @@ class Index extends GetView<GlobalController> {
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 8, 10, 8),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: const CacheImage(
-                imageUrl:
-                    'https://bbs-static.miyoushe.com/communityweb/upload/222b847170feb3f2babcc1bd4f0e30dd.png',
+            child: SizedBox(
+              width: 24,
+              height: 24,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: const CacheImage(
+                  imageUrl:
+                      'https://bbs-static.miyoushe.com/communityweb/upload/222b847170feb3f2babcc1bd4f0e30dd.png',
+                ),
               ),
             ),
           )
