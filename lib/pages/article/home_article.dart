@@ -44,17 +44,17 @@ class _HomeArticleState extends State<HomeArticle> {
       color: Colors.white,
       padding: const EdgeInsets.all(10),
       margin: const EdgeInsets.only(bottom: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          InkWell(
-            onTap: () {
-              MyRouter.push(
-                MyRouter.articleDetails,
-                {'id': widget.itemData['post']['post_id']},
-              );
-            },
-            child: Column(
+      child: InkWell(
+        onTap: () {
+          MyRouter.push(
+            MyRouter.articleDetails,
+            {'id': widget.itemData['post']['post_id']},
+          );
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(children: [
@@ -160,61 +160,61 @@ class _HomeArticleState extends State<HomeArticle> {
                 ),
               ],
             ),
-          ),
-          List.from(widget.itemData['image_list']).isNotEmpty
-              ? Container(
-                  margin: const EdgeInsets.only(top: 5),
-                  height: 115,
-                  child: GridView.count(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 7,
-                      physics: const NeverScrollableScrollPhysics(),
-                      children: List.from(widget.itemData['image_list'])
-                          .take(3)
-                          .map((img) {
-                        return GestureDetector(
-                          onTap: () {
-                            previewImg(img['url']);
-                          },
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(5),
-                            child: Hero(
-                              tag: img['url'],
-                              child: CacheImage(
-                                imageUrl: img['url'],
+            List.from(widget.itemData['image_list']).isNotEmpty
+                ? Container(
+                    margin: const EdgeInsets.only(top: 5),
+                    height: 115,
+                    child: GridView.count(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 7,
+                        physics: const NeverScrollableScrollPhysics(),
+                        children: List.from(widget.itemData['image_list'])
+                            .take(3)
+                            .map((img) {
+                          return GestureDetector(
+                            onTap: () {
+                              previewImg(img['url']);
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(5),
+                              child: Hero(
+                                tag: img['url'],
+                                child: CacheImage(
+                                  imageUrl: img['url'],
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      }).toList()),
-                )
-              : Container(),
-          Wrap(
-            children: List.from(widget.itemData['topics']).map((v) {
-              return Container(
-                padding: const EdgeInsets.fromLTRB(5, 2, 5, 2),
-                margin: const EdgeInsets.fromLTRB(0, 7, 10, 0),
-                decoration: BoxDecoration(
-                  color: const Color(0xffedf6fc),
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Text(
-                  v['name'],
-                  style:
-                      const TextStyle(color: Color(0xff00b2ff), fontSize: 10),
-                ),
-              );
-            }).toList(),
-          ),
-          Container(
-            height: 1,
-            margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-            color: const Color(0xfff0f4f5),
-          ),
-          TripleLike(
-            numberData: widget.itemData['stat2'] ?? widget.itemData['stat'],
-          ),
-        ],
+                          );
+                        }).toList()),
+                  )
+                : Container(),
+            Wrap(
+              children: List.from(widget.itemData['topics']).map((v) {
+                return Container(
+                  padding: const EdgeInsets.fromLTRB(5, 2, 5, 2),
+                  margin: const EdgeInsets.fromLTRB(0, 7, 10, 0),
+                  decoration: BoxDecoration(
+                    color: const Color(0xffedf6fc),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Text(
+                    v['name'],
+                    style:
+                        const TextStyle(color: Color(0xff00b2ff), fontSize: 10),
+                  ),
+                );
+              }).toList(),
+            ),
+            Container(
+              height: 1,
+              margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+              color: const Color(0xfff0f4f5),
+            ),
+            TripleLike(
+              numberData: widget.itemData['stat2'] ?? widget.itemData['stat'],
+            ),
+          ],
+        ),
       ),
     );
   }

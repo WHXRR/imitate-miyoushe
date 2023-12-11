@@ -161,6 +161,11 @@ class CommentTemplate extends StatelessWidget {
                   ],
                 ),
               ),
+              itemBuilder != null
+                  ? const SizedBox(
+                      height: 10,
+                    )
+                  : Container(),
               itemBuilder ?? Container(),
             ],
           ),

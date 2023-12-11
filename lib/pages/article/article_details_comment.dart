@@ -148,7 +148,7 @@ class ArticleDetailsComment extends GetView<ArticleDetailsController> {
               : Column(
                   children: controller.commentList.map((item) {
                     return Container(
-                      margin: const EdgeInsets.fromLTRB(0, 10, 0, 5),
+                      margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                       padding: const EdgeInsets.only(bottom: 10),
                       decoration: const BoxDecoration(
                         border: Border(
@@ -178,7 +178,11 @@ class ArticleDetailsComment extends GetView<ArticleDetailsController> {
                                       child: Container(
                                         padding: const EdgeInsets.fromLTRB(
                                             10, 5, 10, 5),
-                                        color: const Color(0xfff7f9fa),
+                                        decoration: BoxDecoration(
+                                          color: const Color(0xfff7f9fa),
+                                          borderRadius:
+                                              BorderRadius.circular(4),
+                                        ),
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -273,7 +277,7 @@ class ArticleDetailsComment extends GetView<ArticleDetailsController> {
                                   ],
                                 ),
                               )
-                            : Container(),
+                            : null,
                       ),
                     );
                   }).toList(),
