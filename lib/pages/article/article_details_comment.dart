@@ -3,6 +3,9 @@ import 'package:get/get.dart';
 import 'package:imitate_miyoushe/controllers/article_details.dart';
 import 'package:imitate_miyoushe/utils/formatTime.dart';
 import 'package:imitate_miyoushe/common/cache_image.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:imitate_miyoushe/router/routes.dart';
+import 'package:imitate_miyoushe/common/comment_template.dart';
 
 class ArticleDetailsComment extends GetView<ArticleDetailsController> {
   const ArticleDetailsComment({Key? key}) : super(key: key);
@@ -158,128 +161,122 @@ class ArticleDetailsComment extends GetView<ArticleDetailsController> {
                           ),
                         ),
                       ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: 35,
-                            height: 35,
-                            margin: const EdgeInsets.only(right: 10),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(15),
-                              child: CacheImage(
-                                imageUrl: item['user']['avatar_url'],
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
+                      child: CommentTemplate(
+                        commentData: item,
+                        LZID: item['user']['uid'],
+                        itemBuilder: List.from(item['sub_replies']).isNotEmpty
+                            ? GestureDetector(
+                                onTap: () {
+                                  MyRouter.push(
+                                    MyRouter.commentDetails,
+                                    {
+                                      'floor_id': item['reply']['floor_id'],
+                                      'reply_id': item['reply']['reply_id']
+                                    },
+                                  );
+                                },
+                                child: Row(
                                   children: [
-                                    Text(
-                                      '${item['user']['nickname']}',
-                                      style: const TextStyle(
-                                          color: Color(0xff404040),
-                                          fontSize: 15),
-                                    ),
-                                    Container(
-                                      margin: const EdgeInsets.only(left: 3),
-                                      padding:
-                                          const EdgeInsets.fromLTRB(5, 2, 5, 2),
-                                      decoration: BoxDecoration(
-                                        color: const Color(0xffffbf00),
-                                        borderRadius: BorderRadius.circular(3),
-                                      ),
-                                      child: Text(
-                                        'lv ${item['user']['level_exp']['level']}',
-                                        style: const TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 7,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 3,
-                                ),
-                                Text(
-                                  '来自${item['user']['ip_region']}',
-                                  style: const TextStyle(
-                                    fontSize: 9,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 5),
-                                  child: Text(
-                                    item['reply']['content'],
-                                    style: const TextStyle(
-                                      color: Color(0xff404040),
-                                      fontSize: 13,
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 10),
-                                  child: Flex(
-                                    direction: Axis.horizontal,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        formatTimeHMS(
-                                            item['reply']['created_at']),
-                                        style: const TextStyle(
-                                          fontSize: 11,
-                                          color: Colors.grey,
+                                    Expanded(
+                                      child: Container(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            10, 5, 10, 5),
+                                        color: const Color(0xfff7f9fa),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children:
+                                                  List.from(item['sub_replies'])
+                                                      .map((ele) {
+                                                return Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        Text(
+                                                          '${ele['user']['nickname']}',
+                                                          style:
+                                                              const TextStyle(
+                                                            color: Color(
+                                                                0xff00c3ff),
+                                                            fontSize: 13,
+                                                          ),
+                                                        ),
+                                                        ele['r_user']['uid'] !=
+                                                                item['user']
+                                                                    ['uid']
+                                                            ? const Text(
+                                                                ' 回复 ',
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Color(
+                                                                      0xffcccccc),
+                                                                  fontSize: 13,
+                                                                ),
+                                                              )
+                                                            : const Text(''),
+                                                        ele['r_user']['uid'] !=
+                                                                item['user']
+                                                                    ['uid']
+                                                            ? Text(
+                                                                '${ele['r_user']['nickname']}',
+                                                                style:
+                                                                    const TextStyle(
+                                                                  color: Color(
+                                                                      0xff00c3ff),
+                                                                  fontSize: 13,
+                                                                ),
+                                                              )
+                                                            : const Text(''),
+                                                        const Text(
+                                                          ' :',
+                                                          style: TextStyle(
+                                                            fontSize: 13,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Text(
+                                                      '${ele['reply']['content']}',
+                                                      style: const TextStyle(
+                                                        fontSize: 13,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 5,
+                                                    )
+                                                  ],
+                                                );
+                                              }).toList(),
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                item['sub_reply_count'] >= 3
+                                                    ? Text(
+                                                        '查看全部${item['sub_reply_count']}条评论 >',
+                                                        style: const TextStyle(
+                                                            fontSize: 13,
+                                                            color: Color(
+                                                                0xff00c3ff)),
+                                                      )
+                                                    : Container(),
+                                              ],
+                                            )
+                                          ],
                                         ),
                                       ),
-                                      Row(
-                                        children: [
-                                          const Icon(
-                                            Icons.thumb_up_outlined,
-                                            color: Color(0xff999999),
-                                            size: 15,
-                                          ),
-                                          const SizedBox(
-                                            width: 5,
-                                          ),
-                                          Text(
-                                            item['stat']['like_num'].toString(),
-                                            style: const TextStyle(
-                                              color: Color(0xff999999),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            width: 15,
-                                          ),
-                                          const Icon(
-                                            Icons.thumb_down_outlined,
-                                            color: Color(0xff999999),
-                                            size: 15,
-                                          ),
-                                          const SizedBox(
-                                            width: 5,
-                                          ),
-                                          Text(
-                                            item['stat']['dislike_num']
-                                                .toString(),
-                                            style: const TextStyle(
-                                              color: Color(0xff999999),
-                                            ),
-                                          )
-                                        ],
-                                      )
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          ),
-                        ],
+                              )
+                            : Container(),
                       ),
                     );
                   }).toList(),

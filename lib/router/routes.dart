@@ -2,13 +2,16 @@ import 'package:get/get.dart';
 
 import 'package:imitate_miyoushe/pages/index/index.dart';
 import 'package:imitate_miyoushe/pages/article/article_details.dart';
+import 'package:imitate_miyoushe/pages/article/comment_details.dart';
 
 import 'package:imitate_miyoushe/binding/index.dart';
 import 'package:imitate_miyoushe/binding/article_details.dart';
+import 'package:imitate_miyoushe/binding/comment_details.dart';
 
 class MyRouter {
   static const String home = "/";
   static const String articleDetails = "/articleDetails";
+  static const String commentDetails = "/commentDetails";
 
   static const String login = "/login";
   static const String register = "/register";
@@ -27,6 +30,11 @@ class MyRouter {
       name: articleDetails,
       page: () => const ArticleDetails(),
       binding: ArticleDetailsBinding(),
+    ),
+    GetPage(
+      name: commentDetails,
+      page: () => const CommentDetails(),
+      binding: CommentDetailsBinding(),
     ),
   ];
 }

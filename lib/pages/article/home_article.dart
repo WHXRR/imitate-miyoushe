@@ -145,7 +145,7 @@ class _HomeArticleState extends State<HomeArticle> {
                 Text(
                   widget.itemData['post']['subject'],
                   style: const TextStyle(
-                    fontSize: 14,
+                    fontSize: 15,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

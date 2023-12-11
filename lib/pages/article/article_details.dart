@@ -108,6 +108,13 @@ class ArticleDetails extends GetView<ArticleDetailsController> {
                           : Html(
                               data:
                                   '${controller.articleData['post']['content']}',
+                              style: {
+                                'body': Style(
+                                  backgroundColor: Colors.white,
+                                  padding: HtmlPaddings.all(0),
+                                  margin: Margins.all(0),
+                                ),
+                              },
                             ),
                       Wrap(
                         children: List.from(controller.articleData['topics'])

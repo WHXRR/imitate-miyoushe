@@ -124,11 +124,17 @@ class _CosRankingState extends State<CosRanking> {
                                         const SizedBox(
                                           width: 5,
                                         ),
-                                        Text(
-                                          img['user']['nickname'],
-                                          style: const TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 12,
+                                        Container(
+                                          constraints: const BoxConstraints(
+                                            maxWidth: 50,
+                                          ),
+                                          child: Text(
+                                            img['user']['nickname'],
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12,
+                                            ),
                                           ),
                                         )
                                       ],
