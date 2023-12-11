@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imitate_miyoushe/controllers/article_details.dart';
-import 'package:imitate_miyoushe/utils/formatTime.dart';
-import 'package:imitate_miyoushe/common/cache_image.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:imitate_miyoushe/router/routes.dart';
 import 'package:imitate_miyoushe/common/comment_template.dart';
 
