@@ -28,10 +28,10 @@ class Index extends GetView<GlobalController> {
           ),
         ),
         actions: [
-          const Padding(
-            padding: EdgeInsets.only(right: 10),
-            child: DownloadAPK(),
-          ),
+          // const Padding(
+          //   padding: EdgeInsets.only(right: 10),
+          //   child: DownloadAPK(),
+          // ),
           const Padding(
             padding: EdgeInsets.only(right: 10),
             child: Icon(Icons.search, size: 21),

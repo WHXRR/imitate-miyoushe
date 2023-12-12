@@ -11,7 +11,6 @@ class Request {
     late String base;
     base = (baseurl.isEmpty ? baseURL['url1'] : baseurl)!;
     final uri = Uri.parse('$base$url').replace(queryParameters: params);
-    // var uri = Uri.https(base, url, params);
     final response = await http.get(
       uri,
       headers: {
@@ -21,7 +20,6 @@ class Request {
         'Referer': 'https://m.miyoushe.com/',
       },
     );
-
     return _handleResponse(response);
   }
 
