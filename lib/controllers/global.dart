@@ -22,10 +22,12 @@ class GlobalController extends GetxController {
     buildSignature: 'Unknown',
     installerStore: 'Unknown',
   );
+  RxString packageVersion = ''.obs;
   // 获取当前app版本信息
   Future<void> _initPackageInfo() async {
     final info = await PackageInfo.fromPlatform();
     _packageInfo = info;
+    packageVersion.value = info.version;
   }
 
   // 获取app最新版本信息
@@ -64,7 +66,7 @@ class GlobalController extends GetxController {
       content: Column(
         children: [
           Text(
-            '当前版本${_packageInfo.version}',
+            '当前版本${packageVersion.value}',
             style: const TextStyle(
               color: Color.fromARGB(255, 173, 174, 175),
               fontSize: 10,
