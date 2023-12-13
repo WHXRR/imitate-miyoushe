@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:imitate_miyoushe/utils/game_category_data.dart';
 import 'package:imitate_miyoushe/common/game_category_dialog.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
@@ -72,7 +71,7 @@ class GlobalController extends GetxController {
     }
   }
 
-  RxBool _isDownloadSuccess = false.obs;
+  final RxBool _isDownloadSuccess = false.obs;
   RxString savePath = ''.obs;
   // 下载apk
   Future<void> downloadFile() async {
@@ -139,17 +138,6 @@ class GlobalController extends GetxController {
             style: const TextStyle(
               fontSize: 14,
             ),
-            // child: Html(
-            //   data: latestPackageInfo['release_notes'],
-            //   style: {
-            //     'body': Style(
-            //       padding: HtmlPaddings.all(0),
-            //       margin: Margins.all(0),
-            //       fontSize: FontSize(14),
-            //       color: const Color.fromARGB(255, 173, 174, 175),
-            //     ),
-            //   },
-            // ),
           ),
           const SizedBox(
             height: 10,

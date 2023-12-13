@@ -25,28 +25,28 @@ class GameCategoryDialog extends Dialog {
             homeController.getData();
             Navigator.pop(context);
           },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: 52,
-                height: 52,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(6),
-                  child: Image.asset(e["src"]),
+          child: Container(
+            padding: const EdgeInsets.fromLTRB(5, 10, 5, 5),
+            width: (MediaQuery.of(context).size.width - 10) * 0.2,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: 52,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(6),
+                    child: Image.asset(e["src"]),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 2),
-              SizedBox(
-                width: 50,
-                child: Text(
+                const SizedBox(height: 2),
+                Text(
                   '${e["name"]}',
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.center,
                   style: const TextStyle(fontSize: 10),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         );
       }).toList();
@@ -62,14 +62,16 @@ class GameCategoryDialog extends Dialog {
               right: 0,
               child: Container(
                 decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(10),
-                        bottomRight: Radius.circular(10))),
-                padding: const EdgeInsets.all(15),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
+                  ),
+                ),
+                padding: const EdgeInsets.fromLTRB(5, 10, 5, 10),
                 child: Wrap(
-                  spacing: 17,
-                  runSpacing: 15,
+                  // spacing: 17,
+                  // runSpacing: 15,
                   children: _initGameCategoryList(),
                 ),
               ),
