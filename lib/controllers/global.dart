@@ -8,7 +8,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:dio/dio.dart';
-import 'package:open_file/open_file.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:install_plugin/install_plugin.dart';
 
 class GlobalController extends GetxController {
   RxMap currentGameCategory = {}.obs;
@@ -49,6 +50,64 @@ class GlobalController extends GetxController {
     }
   }
 
+  // 获取文件保存路径
+  Future<String> _apkLocalPath() async {
+    final directory = await getExternalStorageDirectory();
+    var localPath = directory!.path.toString();
+    return localPath;
+  }
+
+  // 获取权限
+  Future<bool> getPermission() async {
+    var status = await Permission.storage.status;
+    if (status.isDenied) {
+      var requestStatuse = await Permission.storage.request();
+      if (requestStatuse.isGranted) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return true;
+    }
+  }
+
+  RxBool _isDownloadSuccess = false.obs;
+  RxString savePath = ''.obs;
+  // 下载apk
+  Future<void> downloadFile() async {
+    try {
+      bool permission = await getPermission();
+      if (!permission) {
+        Get.back();
+        return;
+      }
+      final String documentsPath = await _apkLocalPath();
+      savePath.value = '$documentsPath/miyoushe.apk';
+      await dio.download(
+        latestPackageInfo['download_link'],
+        savePath.value,
+        onReceiveProgress: (received, total) {
+          if (total != -1) {
+            progress.value = received / total;
+          }
+        },
+      );
+      _isDownloadSuccess.value = true;
+      installAPK();
+    } catch (e) {
+      print('Error downloading file: $e');
+    }
+  }
+
+  // 安装apk
+  installAPK() async {
+    final res = await InstallPlugin.install(savePath.value);
+    if (res['isSuccess']) {
+      Get.back();
+    }
+  }
+
   final RxBool _isDownloading = false.obs;
   late Dio dio;
   RxDouble progress = 0.0.obs;
@@ -73,19 +132,28 @@ class GlobalController extends GetxController {
             ),
           ),
           const SizedBox(
-            height: 5,
+            height: 10,
           ),
-          Html(
-            data: latestPackageInfo['release_notes'],
-            style: {
-              'body': Style(
-                padding: HtmlPaddings.all(0),
-                margin: Margins.all(0),
-                fontSize: FontSize(14),
-                color: const Color.fromARGB(255, 173, 174, 175),
-              ),
-            },
-          )
+          Text(
+            latestPackageInfo['release_notes'],
+            style: const TextStyle(
+              fontSize: 14,
+            ),
+            // child: Html(
+            //   data: latestPackageInfo['release_notes'],
+            //   style: {
+            //     'body': Style(
+            //       padding: HtmlPaddings.all(0),
+            //       margin: Margins.all(0),
+            //       fontSize: FontSize(14),
+            //       color: const Color.fromARGB(255, 173, 174, 175),
+            //     ),
+            //   },
+            // ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
         ],
       ),
       contentPadding: const EdgeInsets.fromLTRB(20, 3, 20, 10),
@@ -93,9 +161,8 @@ class GlobalController extends GetxController {
         Obx(
           () => Column(
             children: [
-              _isDownloading.value
-                  ? Container()
-                  : ElevatedButton(
+              !_isDownloadSuccess.value && !_isDownloading.value
+                  ? ElevatedButton(
                       onPressed: () {
                         _isDownloading.value = true;
                         downloadFile();
@@ -120,8 +187,9 @@ class GlobalController extends GetxController {
                           fontSize: 13,
                         ),
                       ),
-                    ),
-              _isDownloading.value
+                    )
+                  : Container(),
+              !_isDownloadSuccess.value && _isDownloading.value
                   ? Padding(
                       padding: const EdgeInsets.only(bottom: 5),
                       child: LinearProgressIndicator(
@@ -129,6 +197,33 @@ class GlobalController extends GetxController {
                         backgroundColor: Colors.grey[300],
                         valueColor: const AlwaysStoppedAnimation<Color>(
                           Color(0xff70e2ff),
+                        ),
+                      ),
+                    )
+                  : Container(),
+              _isDownloadSuccess.value
+                  ? ElevatedButton(
+                      onPressed: () {
+                        installAPK();
+                      },
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                          const Color(0xff1f2233),
+                        ),
+                        padding: MaterialStateProperty.all(
+                          const EdgeInsets.fromLTRB(30, 1, 30, 1),
+                        ),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                      ),
+                      child: const Text(
+                        '立即安装',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13,
                         ),
                       ),
                     )
@@ -145,33 +240,6 @@ class GlobalController extends GetxController {
         )
       ],
     );
-  }
-
-  // 获取文件保存路径
-  Future<String> _apkLocalPath() async {
-    final directory = await getExternalStorageDirectory();
-    var localPath = directory!.path.toString();
-    return localPath;
-  }
-
-  // 下载apk
-  Future<void> downloadFile() async {
-    try {
-      final String documentsPath = await _apkLocalPath();
-      final String savePath = '$documentsPath/miyoushe.apk';
-      await dio.download(
-        latestPackageInfo['download_link'],
-        savePath,
-        onReceiveProgress: (received, total) {
-          if (total != -1) {
-            progress.value = received / total;
-          }
-        },
-      );
-      OpenFile.open(savePath);
-    } catch (e) {
-      print('Error downloading file: $e');
-    }
   }
 
   showGameCategoryDialog(

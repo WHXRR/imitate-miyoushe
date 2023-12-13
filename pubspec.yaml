@@ -46,7 +46,7 @@ dependencies:
   cached_network_image: ^3.3.0
   package_info_plus: ^4.2.0
   dio: ^5.4.0
-  open_file: ^3.3.2
+  install_plugin: ^2.1.0
 
 dev_dependencies:
   flutter_test:
