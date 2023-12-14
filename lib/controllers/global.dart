@@ -9,6 +9,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:install_plugin/install_plugin.dart';
+import 'package:imitate_miyoushe/utils/compare_versions.dart';
 
 class GlobalController extends GetxController {
   RxMap currentGameCategory = {}.obs;
@@ -43,7 +44,9 @@ class GlobalController extends GetxController {
     if (response.statusCode == 200) {
       Map<String, dynamic> data = jsonDecode(response.body);
       latestPackageInfo.value = data['data'][0];
-      if (latestPackageInfo['version_number'] != _packageInfo.version) {
+      int result = compareVersions(
+          _packageInfo.version, latestPackageInfo['version_number']);
+      if (result < 0) {
         showUpdateDialog();
       }
     }
@@ -113,7 +116,7 @@ class GlobalController extends GetxController {
   // 显示更新对话框
   showUpdateDialog() {
     Get.defaultDialog(
-      barrierDismissible: false,
+      // barrierDismissible: false,
       radius: 10,
       title: '发现新版本',
       titleStyle: const TextStyle(
