@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imitate_miyoushe/controllers/home.dart';
 import 'package:imitate_miyoushe/common/cache_image.dart';
+import 'package:imitate_miyoushe/router/routes.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeSwiper extends StatefulWidget {
   const HomeSwiper({Key? key}) : super(key: key);
@@ -56,8 +58,25 @@ class _HomeSwiperState extends State<HomeSwiper> {
                         _list = homeController.bannerData.map((item) {
                           return ClipRRect(
                             borderRadius: BorderRadius.circular(7),
-                            child: CacheImage(
-                              imageUrl: item['cover'],
+                            child: GestureDetector(
+                              onTap: () async {
+                                String path = item['path'];
+                                if (path.contains('article/')) {
+                                  var id = path.split('article/')[1];
+                                  MyRouter.push(
+                                    MyRouter.articleDetails,
+                                    {'id': id},
+                                  );
+                                } else if (path.contains('https')) {
+                                  var url = Uri.parse(path);
+                                  if (!await launchUrl(url)) {
+                                    throw Exception('Could not launch $path');
+                                  }
+                                }
+                              },
+                              child: CacheImage(
+                                imageUrl: item['cover'],
+                              ),
                             ),
                           );
                         }).toList();

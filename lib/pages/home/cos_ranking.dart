@@ -43,8 +43,10 @@ class _CosRankingState extends State<CosRanking> {
 
   @override
   Widget build(BuildContext context) {
-    return rankData.isNotEmpty
+    return cosRanking.isNotEmpty
         ? Container(
+            padding: const EdgeInsets.all(10),
+            margin: const EdgeInsets.only(bottom: 10),
             color: Colors.white,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

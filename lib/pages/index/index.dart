@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../game_tabs/game_tabs.dart';
 import 'package:imitate_miyoushe/controllers/global.dart';
 import 'package:imitate_miyoushe/common/cache_image.dart';
+import 'package:imitate_miyoushe/router/routes.dart';
 
 class Index extends GetView<GlobalController> {
   const Index({Key? key}) : super(key: key);
@@ -31,14 +32,19 @@ class Index extends GetView<GlobalController> {
           //   padding: EdgeInsets.only(right: 10),
           //   child: DownloadAPK(),
           // ),
-          const Padding(
-            padding: EdgeInsets.only(right: 10),
-            child: Icon(Icons.search, size: 21),
+          GestureDetector(
+            onTap: () {
+              MyRouter.push(MyRouter.search);
+            },
+            child: const Padding(
+              padding: EdgeInsets.only(right: 10),
+              child: Icon(Icons.search, size: 21),
+            ),
           ),
-          const Padding(
-            padding: EdgeInsets.only(right: 10),
-            child: Icon(Icons.sms_outlined, size: 21),
-          ),
+          // const Padding(
+          //   padding: EdgeInsets.only(right: 10),
+          //   child: Icon(Icons.sms_outlined, size: 21),
+          // ),
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 8, 10, 8),
             child: SizedBox(

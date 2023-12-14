@@ -95,13 +95,8 @@ class _HomeCosState extends State<HomeCos> {
                   itemBuilder: (context, index) {
                     return Column(
                       children: [
-                        Container(
-                          padding: const EdgeInsets.all(10),
-                          margin: const EdgeInsets.only(bottom: 10),
-                          color: Colors.white,
-                          child: CosRanking(
-                            currentTab: widget.currentTab,
-                          ),
+                        CosRanking(
+                          currentTab: widget.currentTab,
                         ),
                         Container(
                           padding: const EdgeInsets.all(10),
