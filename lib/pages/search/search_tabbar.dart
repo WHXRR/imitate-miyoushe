@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imitate_miyoushe/controllers/search.dart';
 import 'package:imitate_miyoushe/common/keep_alive_wrapper.dart';
-import 'search_talk.dart';
+import 'search_topics.dart';
 import 'search_post.dart';
 import 'search_wiki.dart';
 import 'search_user.dart';
@@ -50,7 +50,7 @@ class SearchTabBar extends GetView<SearchPageController> {
         child: TabBarView(
           controller: controller.tabController,
           children: const [
-            SearchTalk(),
+            SearchTopics(),
             SearchPost(),
             SearchWiki(),
             SearchUser(),

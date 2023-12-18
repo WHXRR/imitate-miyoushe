@@ -59,15 +59,16 @@ class _HomeArticleState extends State<HomeArticle> {
               children: [
                 Row(children: [
                   Container(
-                      width: 35,
-                      height: 35,
-                      margin: const EdgeInsets.only(right: 10),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
-                        child: CacheImage(
-                          imageUrl: widget.itemData['user']['avatar_url'],
-                        ),
-                      )),
+                    width: 35,
+                    height: 35,
+                    margin: const EdgeInsets.only(right: 10),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: CacheImage(
+                        imageUrl: widget.itemData['user']['avatar_url'],
+                      ),
+                    ),
+                  ),
                   Expanded(
                       flex: 1,
                       child: Column(
@@ -139,25 +140,30 @@ class _HomeArticleState extends State<HomeArticle> {
                             )
                           ]))
                 ]),
-                const SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  widget.itemData['post']['subject'],
-                  style: const TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
+                Padding(
+                  padding: const EdgeInsets.only(top: 5),
+                  child: Text(
+                    widget.itemData['post']['subject'],
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                Text(
-                  widget.itemData['post']['content'],
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    color: Color(0xff999999),
-                  ),
-                ),
+                widget.itemData['post']['content'].toString().isNotEmpty
+                    ? Padding(
+                        padding: const EdgeInsets.only(top: 2),
+                        child: Text(
+                          widget.itemData['post']['content'],
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 13,
+                            color: Color(0xff999999),
+                          ),
+                        ),
+                      )
+                    : Container(),
               ],
             ),
             List.from(widget.itemData['image_list']).isNotEmpty
@@ -179,8 +185,11 @@ class _HomeArticleState extends State<HomeArticle> {
                               borderRadius: BorderRadius.circular(5),
                               child: Hero(
                                 tag: img['url'],
-                                child: CacheImage(
-                                  imageUrl: img['url'],
+                                child: SizedBox(
+                                  height: 115,
+                                  child: CacheImage(
+                                    imageUrl: img['url'],
+                                  ),
                                 ),
                               ),
                             ),

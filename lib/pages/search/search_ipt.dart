@@ -41,6 +41,14 @@ class SearchIpt extends GetView<SearchPageController> {
                       color: Color(0xfff2f4f5),
                     ),
                   ),
+                  enabledBorder: UnderlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(50),
+                    ),
+                    borderSide: BorderSide(
+                      color: Color(0xfff2f4f5),
+                    ),
+                  ),
                 ),
               ),
             ),
