@@ -23,9 +23,6 @@ class TopicsTop extends GetView<TopicsController> {
               image: DecorationImage(
                 image: Image.network(
                   controller.topicsInfo['topic']['cover'],
-                  width: double.infinity,
-                  height: 220,
-                  fit: BoxFit.contain,
                 ).image,
                 fit: BoxFit.cover,
                 alignment: Alignment.topCenter,

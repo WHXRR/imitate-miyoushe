@@ -48,7 +48,10 @@ class _HomeArticleState extends State<HomeArticle> {
         onTap: () {
           MyRouter.push(
             MyRouter.articleDetails,
-            {'id': widget.itemData['post']['post_id']},
+            {
+              'id': widget.itemData['post']['post_id'],
+              'showType': widget.itemData['post']['view_type'],
+            },
           );
         },
         child: Column(
@@ -183,15 +186,9 @@ class _HomeArticleState extends State<HomeArticle> {
                             },
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(5),
-                              child: Hero(
-                                tag: img['url'],
-                                child: SizedBox(
-                                  height: 115,
-                                  child: CacheImage(
+                              child: CacheImage(
                                     imageUrl: img['url'],
                                   ),
-                                ),
-                              ),
                             ),
                           );
                         }).toList()),

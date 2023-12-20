@@ -5,12 +5,14 @@ import 'package:imitate_miyoushe/pages/article/article_details.dart';
 import 'package:imitate_miyoushe/pages/article/comment_details.dart';
 import 'package:imitate_miyoushe/pages/search/search.dart';
 import 'package:imitate_miyoushe/pages/topics/topics.dart';
+import 'package:imitate_miyoushe/pages/user/user.dart';
 
 import 'package:imitate_miyoushe/binding/index.dart';
 import 'package:imitate_miyoushe/binding/article_details.dart';
 import 'package:imitate_miyoushe/binding/comment_details.dart';
 import 'package:imitate_miyoushe/binding/search.dart';
 import 'package:imitate_miyoushe/binding/topics.dart';
+import 'package:imitate_miyoushe/binding/user.dart';
 
 class MyRouter {
   static const String home = "/";
@@ -18,6 +20,7 @@ class MyRouter {
   static const String commentDetails = "/commentDetails";
   static const String search = "/search";
   static const String topics = "/topics";
+  static const String user = "/user";
 
   static push(String page, [dynamic arguments]) {
     return Get.toNamed(page, arguments: arguments);
@@ -48,6 +51,11 @@ class MyRouter {
       name: topics,
       page: () => const Topics(),
       binding: TopicsBinding(),
+    ),
+    GetPage(
+      name: user,
+      page: () => const User(),
+      binding: UserBinding(),
     ),
   ];
 }

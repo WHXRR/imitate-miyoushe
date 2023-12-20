@@ -8,7 +8,6 @@ import 'package:imitate_miyoushe/controllers/global.dart';
 import 'cos_ranking.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'cos_card.dart';
-import 'package:imitate_miyoushe/router/routes.dart';
 
 class HomeCos extends StatefulWidget {
   final Map currentTab;
@@ -107,21 +106,9 @@ class _HomeCosState extends State<HomeCos> {
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount: homeDataPost.length,
                             itemBuilder: (context, index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  MyRouter.push(
-                                    MyRouter.articleDetails,
-                                    {
-                                      'id': homeDataPost[index]['post']
-                                          ['post_id'],
-                                      'showType':
-                                          widget.currentTab['show_type'],
-                                    },
-                                  );
-                                },
-                                child: CosCard(
-                                  cardData: homeDataPost[index],
-                                ),
+                              return CosCard(
+                                cardData: homeDataPost[index],
+                                currentTab: widget.currentTab,
                               );
                             },
                           ),

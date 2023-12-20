@@ -23,7 +23,7 @@ class ArticleDetails extends GetView<ArticleDetailsController> {
               centerTitle: true,
               elevation: 1,
               title: Text(
-                '${controller.articleData['forum']['name']}',
+                '${controller.articleData['forum']?['name'] ?? '帖子详情'}',
                 style: const TextStyle(
                   fontSize: 16,
                   color: Colors.black,
@@ -80,7 +80,7 @@ class ArticleDetails extends GetView<ArticleDetailsController> {
                       const SizedBox(
                         height: 10,
                       ),
-                      Get.arguments['showType'] == '4'
+                      Get.arguments['showType'] == 2
                           ? Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [

@@ -59,7 +59,8 @@ class SearchWiki extends GetView<SearchPageController> {
                             ),
                           ),
                           Container(
-                            width: double.infinity,
+                            constraints:
+                                const BoxConstraints(maxWidth: double.infinity),
                             margin: const EdgeInsets.only(top: 10, bottom: 10),
                             child: CacheImage(
                               imageUrl: controller.tabBarData['wikisList']

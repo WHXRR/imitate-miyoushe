@@ -47,7 +47,7 @@ class GameTabs extends GetView<GameTabsController> {
                 children: controller.categoryList.map((item) {
                   if (item['id'] == '0') {
                     return const Home();
-                  } else if (item['show_type'] == '4') {
+                  } else if (item['view_type'] == '2') {
                     return HomeCos(currentTab: item);
                   } else {
                     return HomeOther(currentTab: item);

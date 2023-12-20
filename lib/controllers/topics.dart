@@ -10,6 +10,7 @@ class TopicsController extends GetxController {
   RxMap topicsData = {}.obs;
   RxList topicsList = [].obs;
   RxInt listType = 0.obs;
+  RxInt currentGameID = 0.obs;
 
   getTopicsInfo() async {
     var res = await Request.requestGet(
@@ -20,6 +21,7 @@ class TopicsController extends GetxController {
       },
     );
     topicsInfo.value = res['data'];
+    currentGameID.value = globalController.currentGameCategory['id'];
   }
 
   Future<LoadingMoreState> getTopicsData() async {
@@ -28,7 +30,7 @@ class TopicsController extends GetxController {
       'topic_id': Get.arguments['id'],
       'list_type': '${listType.value}',
       'page_size': '20',
-      'game_id': '2',
+      'game_id': '${currentGameID.value}',
     };
     if (topicsData['last_id'] != null) {
       params['last_id'] = topicsData['last_id'];

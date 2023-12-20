@@ -70,7 +70,7 @@ class ArticleDetailsController extends GetxController {
     articleData.value = res1['data']['post'];
     commentData.value = res2['data'];
     commentList.value = res2['data']['list'];
-    if (Get.arguments['showType'] == '4') {
+    if (Get.arguments['showType'] == 2) {
       var result = formatHTML(articleData['post']['content']);
       articleContent.value = result['describe'];
       articleImages.value = result['imgs'];

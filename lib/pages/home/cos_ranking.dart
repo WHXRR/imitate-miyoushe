@@ -72,7 +72,7 @@ class _CosRankingState extends State<CosRanking> {
                             MyRouter.articleDetails,
                             {
                               'id': img['post']['post_id'],
-                              'showType': widget.currentTab['show_type'],
+                              'showType': img['post']['view_type'],
                             },
                           );
                         },
