@@ -6,6 +6,7 @@ class IndexBinding implements Bindings {
   @override
   void dependencies() {
     Get.lazyPut<GameTabsController>(() => GameTabsController());
-    Get.lazyPut<HomeController>(() => HomeController());
+    Get.put<HomeController>(HomeController());
+    // Get.lazyPut<HomeController>(() => HomeController());
   }
 }

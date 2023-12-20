@@ -23,7 +23,7 @@ class User extends GetView<UserController> {
                 children: [
                   const UserTop(),
                   Positioned(
-                    top: 70,
+                    top: 40 + Get.mediaQuery.padding.top,
                     left: 0,
                     right: 0,
                     bottom: 0,
