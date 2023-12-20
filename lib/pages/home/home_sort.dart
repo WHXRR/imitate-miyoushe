@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeSort extends StatefulWidget {
-  bool isHot;
-  int sortType;
+  final bool isHot;
+  final int sortType;
   final Function cb;
-  HomeSort({
+  const HomeSort({
     Key? key,
     required this.isHot,
     required this.sortType,
