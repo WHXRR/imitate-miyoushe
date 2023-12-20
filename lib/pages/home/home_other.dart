@@ -5,6 +5,7 @@ import 'package:imitate_miyoushe/http/request.dart';
 import 'package:imitate_miyoushe/common/loading.dart';
 import 'package:imitate_miyoushe/common/refresh_load_more_indicator.dart';
 import 'package:get/get.dart';
+import 'home_sort.dart';
 import 'package:imitate_miyoushe/controllers/global.dart';
 
 class HomeOther extends StatefulWidget {
@@ -22,18 +23,21 @@ class _HomeOtherState extends State<HomeOther> {
   Map<String, dynamic> postDataMap = {};
   List homeDataPost = [];
   GlobalController globalController = Get.find();
+  bool isHot = false;
+  int sortType = 1;
 
   Future<LoadingMoreState> getData() async {
     // 获取帖子数据
-    var jsonResponse =
-        await Request.requestGet('/post/wapi/getForumPostList', params: {
+    var params = {
       'gids': '${globalController.currentGameCategory['id']}',
       'forum_id': '${widget.currentTab['id']}',
-      'page_size': '10',
-      'sort_type': '1',
+      'page_size': '20',
+      'sort_type': '$sortType',
       'is_good': 'false',
-      'is_hot': 'false'
-    });
+      'is_hot': '$isHot'
+    };
+    var jsonResponse =
+        await Request.requestGet('/post/wapi/getForumPostList', params: params);
     setState(() {
       postDataMap = jsonResponse['data'];
       homeDataPost = jsonResponse['data']['list'];
@@ -83,13 +87,29 @@ class _HomeOtherState extends State<HomeOther> {
           itemCount: 1,
           itemBuilder: (context, index) {
             return Column(
-              children: homeDataPost.isNotEmpty
-                  ? homeDataPost.map((item) {
-                      return HomeArticle(
-                        itemData: item,
-                      );
-                    }).toList()
-                  : [],
+              children: [
+                HomeSort(
+                    isHot: isHot,
+                    sortType: sortType,
+                    cb: (hot, type) async {
+                      setState(() {
+                        isHot = hot;
+                        sortType = type;
+                        postDataMap = {};
+                        homeDataPost = [];
+                      });
+                      await getData();
+                    }),
+                Column(
+                  children: homeDataPost.isNotEmpty
+                      ? homeDataPost.map((item) {
+                          return HomeArticle(
+                            itemData: item,
+                          );
+                        }).toList()
+                      : [],
+                )
+              ],
             );
           },
           onRefresh: () async {
