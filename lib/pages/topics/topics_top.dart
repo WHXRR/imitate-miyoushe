@@ -2,7 +2,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imitate_miyoushe/controllers/topics.dart';
-import 'package:imitate_miyoushe/common/cache_image.dart';
 
 class TopicsTop extends GetView<TopicsController> {
   const TopicsTop({Key? key}) : super(key: key);

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../game_tabs/game_tabs.dart';
 import 'package:imitate_miyoushe/controllers/global.dart';
-import 'package:imitate_miyoushe/common/cache_image.dart';
 import 'package:imitate_miyoushe/router/routes.dart';
 
 class Index extends GetView<GlobalController> {

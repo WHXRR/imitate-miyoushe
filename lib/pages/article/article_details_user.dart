@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imitate_miyoushe/controllers/article_details.dart';
-import 'package:imitate_miyoushe/common/cache_image.dart';
 
 class ArticleDetailsUser extends GetView<ArticleDetailsController> {
   const ArticleDetailsUser({Key? key}) : super(key: key);

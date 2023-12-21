@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imitate_miyoushe/common/refresh_load_more_indicator.dart';
 import 'package:imitate_miyoushe/controllers/search.dart';
-import 'package:imitate_miyoushe/common/cache_image.dart';
 import 'search_empty.dart';
 import 'package:imitate_miyoushe/router/routes.dart';
 import 'package:imitate_miyoushe/utils/text_highlighting.dart';
