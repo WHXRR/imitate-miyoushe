@@ -122,7 +122,9 @@ class _HomeArticleState extends State<HomeArticle> {
                                     leading: 0.0,
                                   ),
                                   style: const TextStyle(
-                                      color: Color(0xffcccccc), fontSize: 12),
+                                    color: Color(0xffcccccc),
+                                    fontSize: 12,
+                                  ),
                                 ),
                                 Container(
                                   width:

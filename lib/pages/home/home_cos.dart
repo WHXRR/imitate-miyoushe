@@ -8,6 +8,7 @@ import 'package:imitate_miyoushe/controllers/global.dart';
 import 'cos_ranking.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'cos_card.dart';
+import 'home_sort.dart';
 
 class HomeCos extends StatefulWidget {
   final Map currentTab;
@@ -20,48 +21,35 @@ class HomeCos extends StatefulWidget {
 class _HomeCosState extends State<HomeCos> {
   Map<String, dynamic> postDataMap = {};
   List homeDataPost = [];
+  bool isHot = false;
+  int sortType = 1;
   GlobalController globalController = Get.find();
 
   Future<LoadingMoreState> getData() async {
-    // 获取帖子数据
-    var jsonResponse =
-        await Request.requestGet('/post/wapi/getForumPostList', params: {
+    if (postDataMap['is_last'] != null && postDataMap['is_last']) {
+      return LoadingMoreState.noData;
+    }
+    var params = {
       'gids': '${globalController.currentGameCategory['id']}',
       'forum_id': '${widget.currentTab['id']}',
       'page_size': '20',
-      'sort_type': '1',
+      'sort_type': '$sortType',
       'is_good': 'false',
-      'is_hot': 'false'
-    });
+      'is_hot': '$isHot',
+    };
+    if (postDataMap['last_id'] != null) {
+      params['last_id'] = '${postDataMap['last_id']}';
+    }
+    print(params);
+    // 获取帖子数据
+    var res =
+        await Request.requestGet('/post/wapi/getForumPostList', params: params);
     setState(() {
-      postDataMap = jsonResponse['data'];
-      homeDataPost = jsonResponse['data']['list'];
+      postDataMap = res['data'];
+      homeDataPost.addAll(res['data']['list']);
     });
     Loading.hideLoading();
     return LoadingMoreState.complete;
-  }
-
-  Future<LoadingMoreState> getNextPageData() async {
-    if (postDataMap['is_last']) {
-      return LoadingMoreState.noData;
-    } else {
-      // 获取帖子数据
-      var jsonResponse =
-          await Request.requestGet('/post/wapi/getForumPostList', params: {
-        'gids': '${globalController.currentGameCategory['id']}',
-        'forum_id': '${widget.currentTab['id']}',
-        'last_id': '${postDataMap['last_id']}',
-        'page_size': '10',
-        'sort_type': '1',
-        'is_good': 'false',
-        'is_hot': 'false',
-      });
-      setState(() {
-        postDataMap = jsonResponse['data'];
-        homeDataPost.addAll(jsonResponse['data']['list']);
-      });
-      return LoadingMoreState.complete;
-    }
   }
 
   @override
@@ -89,13 +77,26 @@ class _HomeCosState extends State<HomeCos> {
                     await getData();
                   },
                   onLoadMore: () {
-                    return getNextPageData();
+                    return getData();
                   },
                   itemBuilder: (context, index) {
                     return Column(
                       children: [
                         CosRanking(
                           currentTab: widget.currentTab,
+                        ),
+                        HomeSort(
+                          isHot: isHot,
+                          sortType: sortType,
+                          cb: (hot, type) async {
+                            setState(() {
+                              isHot = hot;
+                              sortType = type;
+                              postDataMap = {};
+                              homeDataPost = [];
+                            });
+                            await getData();
+                          },
                         ),
                         Container(
                           padding: const EdgeInsets.all(10),
