@@ -64,6 +64,7 @@ class SearchWiki extends GetView<SearchPageController> {
                               imageUrl: controller.tabBarData['wikisList']
                                   [index]['icon'],
                               fit: BoxFit.contain,
+                              memCacheWidth: 500,
                             ),
                           ),
                           Row(

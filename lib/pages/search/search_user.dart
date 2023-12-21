@@ -44,14 +44,12 @@ class SearchUser extends GetView<SearchPageController> {
                           SizedBox(
                             width: 50,
                             height: 50,
-                            child: ClipRRect(
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(25),
-                              ),
-                              child: CacheImage(
-                                imageUrl: controller.tabBarData['usersList']
-                                    [index]['avatar_url'],
-                              ),
+                            child: CircleAvatar(
+                              backgroundColor: Colors.transparent,
+                              backgroundImage: Image.network(
+                                      controller.tabBarData['usersList'][index]
+                                          ['avatar_url'])
+                                  .image,
                             ),
                           ),
                           const SizedBox(width: 10),

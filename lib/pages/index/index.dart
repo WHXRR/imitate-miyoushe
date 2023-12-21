@@ -50,12 +50,11 @@ class Index extends GetView<GlobalController> {
             child: SizedBox(
               width: 24,
               height: 24,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: const CacheImage(
-                  imageUrl:
-                      'https://bbs-static.miyoushe.com/communityweb/upload/222b847170feb3f2babcc1bd4f0e30dd.png',
-                ),
+              child: CircleAvatar(
+                backgroundColor: Colors.transparent,
+                backgroundImage: Image.network(
+                        'https://bbs-static.miyoushe.com/communityweb/upload/222b847170feb3f2babcc1bd4f0e30dd.png')
+                    .image,
               ),
             ),
           )

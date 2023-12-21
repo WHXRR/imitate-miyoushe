@@ -73,11 +73,11 @@ class _HomeArticleState extends State<HomeArticle> {
                     width: 35,
                     height: 35,
                     margin: const EdgeInsets.only(right: 10),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
-                      child: CacheImage(
-                        imageUrl: widget.itemData['user']['avatar_url'],
-                      ),
+                    child: CircleAvatar(
+                      backgroundColor: Colors.transparent,
+                      backgroundImage:
+                          Image.network(widget.itemData['user']['avatar_url'])
+                              .image,
                     ),
                   ),
                   Expanded(
@@ -187,10 +187,11 @@ class _HomeArticleState extends State<HomeArticle> {
             List.from(widget.itemData['image_list']).isNotEmpty
                 ? Container(
                     margin: const EdgeInsets.only(top: 5),
-                    height: 115,
+                    // height: 130,
                     child: GridView.count(
                         crossAxisCount: 3,
                         crossAxisSpacing: 7,
+                        shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         children: List.from(widget.itemData['image_list'])
                             .take(3)
@@ -203,6 +204,7 @@ class _HomeArticleState extends State<HomeArticle> {
                               borderRadius: BorderRadius.circular(5),
                               child: CacheImage(
                                 imageUrl: img['url'],
+                                memCacheWidth: 500,
                               ),
                             ),
                           );

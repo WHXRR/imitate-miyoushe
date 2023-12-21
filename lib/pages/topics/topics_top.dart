@@ -55,11 +55,11 @@ class TopicsTop extends GetView<TopicsController> {
                     SizedBox(
                       width: 60,
                       height: 60,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(30),
-                        child: CacheImage(
-                          imageUrl: controller.topicsInfo['topic']['cover'],
-                        ),
+                      child: CircleAvatar(
+                        backgroundColor: Colors.transparent,
+                        backgroundImage: Image.network(
+                                controller.topicsInfo['topic']['cover'])
+                            .image,
                       ),
                     ),
                     const SizedBox(

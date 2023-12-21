@@ -16,15 +16,16 @@ class ArticleDetailsUser extends GetView<ArticleDetailsController> {
         Row(
           children: [
             Container(
-                width: 35,
-                height: 35,
-                margin: const EdgeInsets.only(right: 10),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
-                  child: CacheImage(
-                    imageUrl: controller.articleData['user']['avatar_url'],
-                  ),
-                )),
+              width: 35,
+              height: 35,
+              margin: const EdgeInsets.only(right: 10),
+              child: CircleAvatar(
+                backgroundColor: Colors.transparent,
+                backgroundImage:
+                    Image.network(controller.articleData['user']['avatar_url'])
+                        .image,
+              ),
+            ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

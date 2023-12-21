@@ -95,6 +95,7 @@ class _CosRankingState extends State<CosRanking> {
                                   width: 115,
                                   child: CacheImage(
                                     imageUrl: img['cover']['url'],
+                                    memCacheWidth: 500,
                                   ),
                                 ),
                                 Positioned(
@@ -114,13 +115,11 @@ class _CosRankingState extends State<CosRanking> {
                                         SizedBox(
                                           width: 20,
                                           height: 20,
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            child: CacheImage(
-                                              imageUrl: img['user']
-                                                  ['avatar_url'],
-                                            ),
+                                          child: CircleAvatar(
+                                            backgroundColor: Colors.transparent,
+                                            backgroundImage: Image.network(
+                                                    img['user']['avatar_url'])
+                                                .image,
                                           ),
                                         ),
                                         const SizedBox(

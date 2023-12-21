@@ -161,6 +161,7 @@ class UserPost extends StatelessWidget {
                               borderRadius: BorderRadius.circular(5),
                               child: CacheImage(
                                 imageUrl: img['url'],
+                                memCacheWidth: 500,
                               ),
                             ),
                           );

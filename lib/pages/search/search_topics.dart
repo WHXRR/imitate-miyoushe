@@ -43,14 +43,11 @@ class SearchTopics extends GetView<SearchPageController> {
                           SizedBox(
                             width: 50,
                             height: 50,
-                            child: ClipRRect(
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(25),
-                              ),
-                              child: CacheImage(
-                                imageUrl: controller.tabBarData['topicsList']
-                                    [index]['cover'],
-                              ),
+                            child: CircleAvatar(
+                              backgroundColor: Colors.transparent,
+                              backgroundImage: Image.network(controller
+                                      .tabBarData['topicsList'][index]['cover'])
+                                  .image,
                             ),
                           ),
                           const SizedBox(width: 10),

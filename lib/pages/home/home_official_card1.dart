@@ -29,6 +29,7 @@ class HomeOfficialCard1 extends StatelessWidget {
               child: List.from(itemData['image_list']).isNotEmpty
                   ? CacheImage(
                       imageUrl: itemData['image_list'][0]['url'],
+                      memCacheWidth: 700,
                     )
                   : Container(),
             ),

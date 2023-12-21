@@ -23,11 +23,10 @@ class CommentTemplate extends StatelessWidget {
           width: 35,
           height: 35,
           margin: const EdgeInsets.only(right: 10),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(15),
-            child: CacheImage(
-              imageUrl: commentData['user']['avatar_url'],
-            ),
+          child: CircleAvatar(
+            backgroundColor: Colors.transparent,
+            backgroundImage:
+                Image.network(commentData['user']['avatar_url']).image,
           ),
         ),
         Expanded(

@@ -40,7 +40,6 @@ class _HomeCosState extends State<HomeCos> {
     if (postDataMap['last_id'] != null) {
       params['last_id'] = '${postDataMap['last_id']}';
     }
-    print(params);
     // 获取帖子数据
     var res =
         await Request.requestGet('/post/wapi/getForumPostList', params: params);

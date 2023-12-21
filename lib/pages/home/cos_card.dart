@@ -35,6 +35,7 @@ class CosCard extends StatelessWidget {
               ),
               child: CacheImage(
                 imageUrl: cardData['post']['cover'],
+                memCacheWidth: 500,
               ),
             ),
             Padding(
@@ -67,11 +68,11 @@ class CosCard extends StatelessWidget {
                               border: Border.all(
                                 color: const Color(0xffebeff0),
                               )),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(13),
-                            child: CacheImage(
-                              imageUrl: cardData['user']['avatar_url'],
-                            ),
+                          child: CircleAvatar(
+                            backgroundColor: Colors.transparent,
+                            backgroundImage:
+                                Image.network(cardData['user']['avatar_url'])
+                                    .image,
                           ),
                         ),
                         Expanded(

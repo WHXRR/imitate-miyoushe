@@ -5,13 +5,19 @@ import 'package:get/get.dart';
 class CacheImage extends GetView {
   final String imageUrl;
   final BoxFit fit;
-  const CacheImage({Key? key, required this.imageUrl, this.fit = BoxFit.cover})
-      : super(key: key);
+  final int? memCacheWidth;
+  const CacheImage({
+    Key? key,
+    required this.imageUrl,
+    this.fit = BoxFit.cover,
+    this.memCacheWidth,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
       fit: fit,
+      memCacheWidth: memCacheWidth,
       placeholder: (context, url) {
         return const Padding(
           padding: EdgeInsets.all(5),
