@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imitate_miyoushe/common/refresh_load_more_indicator.dart';
@@ -22,9 +23,13 @@ class SearchPageController extends GetxController
     {"name": "用户", "type": TabBarType.users},
   ];
 
+  Timer? timer;
   changeInput(value) {
     keyword.value = value;
-    getCurrentData();
+    timer?.cancel();
+    timer = Timer(const Duration(milliseconds: 500), () {
+      getCurrentData();
+    });
   }
 
   RxMap<String, dynamic> tabBarData = {

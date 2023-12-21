@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:imitate_miyoushe/common/cache_image.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:imitate_miyoushe/utils/formatTime.dart';
+import 'package:imitate_miyoushe/utils/format_time.dart';
 
 class CommentTemplate extends StatelessWidget {
   final Map commentData;

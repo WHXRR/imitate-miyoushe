@@ -5,6 +5,7 @@ import 'package:imitate_miyoushe/controllers/search.dart';
 import 'package:imitate_miyoushe/common/cache_image.dart';
 import 'search_empty.dart';
 import 'package:imitate_miyoushe/router/routes.dart';
+import 'package:imitate_miyoushe/utils/text_highlighting.dart';
 
 class SearchUser extends GetView<SearchPageController> {
   const SearchUser({Key? key}) : super(key: key);
@@ -70,13 +71,10 @@ class SearchUser extends GetView<SearchPageController> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    '${controller.tabBarData['usersList'][index]['nickname']}',
-                                    overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
-                                      fontSize: 15,
-                                      color: Colors.black,
-                                    ),
+                                  formatText(
+                                    controller.tabBarData['usersList'][index]
+                                        ['nickname'],
+                                    controller.keyword.value,
                                   ),
                                   Text(
                                     '${controller.tabBarData['usersList'][index]['introduce']}',

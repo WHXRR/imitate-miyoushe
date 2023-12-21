@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:imitate_miyoushe/utils/formatTime.dart';
+import 'package:imitate_miyoushe/utils/format_time.dart';
 import 'package:imitate_miyoushe/router/routes.dart';
 
 class UserReply extends StatelessWidget {

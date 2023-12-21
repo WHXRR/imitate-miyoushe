@@ -6,6 +6,7 @@ import 'package:imitate_miyoushe/common/cache_image.dart';
 import 'package:imitate_miyoushe/router/routes.dart';
 import 'search_empty.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:imitate_miyoushe/utils/text_highlighting.dart';
 
 class SearchWiki extends GetView<SearchPageController> {
   const SearchWiki({Key? key}) : super(key: key);
@@ -51,12 +52,9 @@ class SearchWiki extends GetView<SearchPageController> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            '${controller.tabBarData['wikisList'][index]['title']}',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
+                          formatText(
+                            controller.tabBarData['wikisList'][index]['title'],
+                            controller.keyword.value,
                           ),
                           Container(
                             constraints:

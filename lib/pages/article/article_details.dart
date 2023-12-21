@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:imitate_miyoushe/controllers/article_details.dart';
 import 'package:imitate_miyoushe/common/refresh_load_more_indicator.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:imitate_miyoushe/utils/formatTime.dart';
+import 'package:imitate_miyoushe/utils/format_time.dart';
 import 'package:imitate_miyoushe/common/article_details_triple_like.dart';
 import 'article_details_user.dart';
 import 'article_details_comment.dart';

@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:imitate_miyoushe/utils/formatTime.dart';
+import 'package:imitate_miyoushe/utils/format_time.dart';
 import 'package:imitate_miyoushe/router/routes.dart';
 import 'package:imitate_miyoushe/common/triple_like.dart';
 import 'package:imitate_miyoushe/common/image_preview_screen.dart';
 import 'package:imitate_miyoushe/common/cache_image.dart';
+import 'package:imitate_miyoushe/utils/text_highlighting.dart';
 
 class HomeArticle extends StatefulWidget {
   final Map itemData;
-  const HomeArticle({Key? key, required this.itemData}) : super(key: key);
+  final bool? isSearch;
+  final String? searchKeyword;
+  const HomeArticle({
+    Key? key,
+    required this.itemData,
+    this.isSearch = false,
+    this.searchKeyword,
+  }) : super(key: key);
 
   @override
   _HomeArticleState createState() => _HomeArticleState();
@@ -145,13 +153,18 @@ class _HomeArticleState extends State<HomeArticle> {
                 ]),
                 Padding(
                   padding: const EdgeInsets.only(top: 5),
-                  child: Text(
-                    widget.itemData['post']['subject'],
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  child: widget.isSearch!
+                      ? formatText(
+                          widget.itemData['post']['subject'],
+                          widget.searchKeyword,
+                        )
+                      : Text(
+                          widget.itemData['post']['subject'],
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                 ),
                 widget.itemData['post']['content'].toString().isNotEmpty
                     ? Padding(
@@ -187,8 +200,8 @@ class _HomeArticleState extends State<HomeArticle> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(5),
                               child: CacheImage(
-                                    imageUrl: img['url'],
-                                  ),
+                                imageUrl: img['url'],
+                              ),
                             ),
                           );
                         }).toList()),

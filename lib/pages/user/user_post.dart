@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:imitate_miyoushe/utils/formatTime.dart';
+import 'package:imitate_miyoushe/utils/format_time.dart';
 import 'package:imitate_miyoushe/router/routes.dart';
 import 'package:imitate_miyoushe/common/triple_like.dart';
 import 'package:imitate_miyoushe/common/image_preview_screen.dart';

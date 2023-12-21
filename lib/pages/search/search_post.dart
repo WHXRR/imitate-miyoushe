@@ -31,6 +31,8 @@ class SearchPost extends GetView<SearchPageController> {
                     margin: const EdgeInsets.only(bottom: 10),
                     child: HomeArticle(
                       itemData: controller.tabBarData['postsList'][index],
+                      isSearch: true,
+                      searchKeyword: controller.keyword.value,
                     ),
                   );
                 },
