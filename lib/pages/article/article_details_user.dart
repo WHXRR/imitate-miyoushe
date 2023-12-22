@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imitate_miyoushe/controllers/article_details.dart';
+import 'package:imitate_miyoushe/router/routes.dart';
 
 class ArticleDetailsUser extends GetView<ArticleDetailsController> {
   const ArticleDetailsUser({Key? key}) : super(key: key);
@@ -14,15 +15,22 @@ class ArticleDetailsUser extends GetView<ArticleDetailsController> {
       children: [
         Row(
           children: [
-            Container(
-              width: 35,
-              height: 35,
-              margin: const EdgeInsets.only(right: 10),
-              child: CircleAvatar(
-                backgroundColor: Colors.transparent,
-                backgroundImage:
-                    Image.network(controller.articleData['user']['avatar_url'])
-                        .image,
+            InkWell(
+              onTap: () {
+                MyRouter.push(MyRouter.user, {
+                  "id": controller.articleData['user']['uid'],
+                });
+              },
+              child: Container(
+                width: 35,
+                height: 35,
+                margin: const EdgeInsets.only(right: 10),
+                child: CircleAvatar(
+                  backgroundColor: Colors.transparent,
+                  backgroundImage: Image.network(
+                          controller.articleData['user']['avatar_url'])
+                      .image,
+                ),
               ),
             ),
             Column(

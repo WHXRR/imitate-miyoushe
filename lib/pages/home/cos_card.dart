@@ -59,20 +59,27 @@ class CosCard extends StatelessWidget {
                     child: Flex(
                       direction: Axis.horizontal,
                       children: [
-                        Container(
-                          width: 26,
-                          height: 26,
-                          margin: const EdgeInsets.only(right: 5),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(13),
-                              border: Border.all(
-                                color: const Color(0xffebeff0),
-                              )),
-                          child: CircleAvatar(
-                            backgroundColor: Colors.transparent,
-                            backgroundImage:
-                                Image.network(cardData['user']['avatar_url'])
-                                    .image,
+                        InkWell(
+                          onTap: () {
+                            MyRouter.push(MyRouter.user, {
+                              "id": cardData['user']['uid'],
+                            });
+                          },
+                          child: Container(
+                            width: 26,
+                            height: 26,
+                            margin: const EdgeInsets.only(right: 5),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(13),
+                                border: Border.all(
+                                  color: const Color(0xffebeff0),
+                                )),
+                            child: CircleAvatar(
+                              backgroundColor: Colors.transparent,
+                              backgroundImage:
+                                  Image.network(cardData['user']['avatar_url'])
+                                      .image,
+                            ),
                           ),
                         ),
                         Expanded(

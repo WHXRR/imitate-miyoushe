@@ -27,10 +27,27 @@ class Index extends GetView<GlobalController> {
           ),
         ),
         actions: [
-          // const Padding(
-          //   padding: EdgeInsets.only(right: 10),
-          //   child: DownloadAPK(),
-          // ),
+          Obx(
+            () => controller.isDownloading.value
+                ? Padding(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: InkWell(
+                      onTap: () {
+                        controller.showUpdateDialog();
+                      },
+                      child: const Icon(Icons.download, size: 21),
+                    ),
+                  )
+                : Padding(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: InkWell(
+                      onTap: () {
+                        controller.checkForUpdates();
+                      },
+                      child: const Icon(Icons.sync, size: 21),
+                    ),
+                  ),
+          ),
           GestureDetector(
             onTap: () {
               MyRouter.push(MyRouter.search);

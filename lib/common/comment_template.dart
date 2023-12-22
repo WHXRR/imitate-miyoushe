@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:imitate_miyoushe/utils/format_time.dart';
+import 'package:imitate_miyoushe/router/routes.dart';
 
 class CommentTemplate extends StatelessWidget {
   final Map commentData;
@@ -18,14 +19,21 @@ class CommentTemplate extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          width: 35,
-          height: 35,
-          margin: const EdgeInsets.only(right: 10),
-          child: CircleAvatar(
-            backgroundColor: Colors.transparent,
-            backgroundImage:
-                Image.network(commentData['user']['avatar_url']).image,
+        InkWell(
+          onTap: () {
+            MyRouter.push(MyRouter.user, {
+              "id": commentData['user']['uid'],
+            });
+          },
+          child: Container(
+            width: 35,
+            height: 35,
+            margin: const EdgeInsets.only(right: 10),
+            child: CircleAvatar(
+              backgroundColor: Colors.transparent,
+              backgroundImage:
+                  Image.network(commentData['user']['avatar_url']).image,
+            ),
           ),
         ),
         Expanded(

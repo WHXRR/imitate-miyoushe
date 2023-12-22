@@ -5,6 +5,7 @@ import 'package:imitate_miyoushe/common/triple_like.dart';
 import 'package:imitate_miyoushe/common/image_preview_screen.dart';
 import 'package:imitate_miyoushe/common/cache_image.dart';
 import 'package:imitate_miyoushe/utils/text_highlighting.dart';
+import 'package:imitate_miyoushe/router/routes.dart';
 
 class HomeArticle extends StatefulWidget {
   final Map itemData;
@@ -69,15 +70,22 @@ class _HomeArticleState extends State<HomeArticle> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(children: [
-                  Container(
-                    width: 35,
-                    height: 35,
-                    margin: const EdgeInsets.only(right: 10),
-                    child: CircleAvatar(
-                      backgroundColor: Colors.transparent,
-                      backgroundImage:
-                          Image.network(widget.itemData['user']['avatar_url'])
-                              .image,
+                  InkWell(
+                    onTap: () {
+                      MyRouter.push(MyRouter.user, {
+                        "id": widget.itemData['user']['uid'],
+                      });
+                    },
+                    child: Container(
+                      width: 35,
+                      height: 35,
+                      margin: const EdgeInsets.only(right: 10),
+                      child: CircleAvatar(
+                        backgroundColor: Colors.transparent,
+                        backgroundImage:
+                            Image.network(widget.itemData['user']['avatar_url'])
+                                .image,
+                      ),
                     ),
                   ),
                   Expanded(

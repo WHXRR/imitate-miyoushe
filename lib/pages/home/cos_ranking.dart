@@ -112,14 +112,22 @@ class _CosRankingState extends State<CosRanking> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        SizedBox(
-                                          width: 20,
-                                          height: 20,
-                                          child: CircleAvatar(
-                                            backgroundColor: Colors.transparent,
-                                            backgroundImage: Image.network(
-                                                    img['user']['avatar_url'])
-                                                .image,
+                                        InkWell(
+                                          onTap: () {
+                                            MyRouter.push(MyRouter.user, {
+                                              "id": img['user']['uid'],
+                                            });
+                                          },
+                                          child: SizedBox(
+                                            width: 20,
+                                            height: 20,
+                                            child: CircleAvatar(
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              backgroundImage: Image.network(
+                                                      img['user']['avatar_url'])
+                                                  .image,
+                                            ),
                                           ),
                                         ),
                                         const SizedBox(

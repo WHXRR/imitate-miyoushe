@@ -43,12 +43,16 @@ class GlobalController extends GetxController {
     );
     if (response.statusCode == 200) {
       Map<String, dynamic> data = jsonDecode(response.body);
-      latestPackageInfo.value = data['data'][0];
+      latestPackageInfo.value =
+          List.from(data['data']).isNotEmpty ? data['data'][0] : {};
       int result = compareVersions(
           _packageInfo.version, latestPackageInfo['version_number']);
       if (result < 0) {
         showUpdateDialog();
       }
+      return result;
+    } else {
+      return Get.snackbar('提示', '获取最新版本信息失败');
     }
   }
 
@@ -110,7 +114,7 @@ class GlobalController extends GetxController {
     }
   }
 
-  final RxBool _isDownloading = false.obs;
+  final RxBool isDownloading = false.obs;
   late Dio dio;
   RxDouble progress = 0.0.obs;
   // 显示更新对话框
@@ -152,10 +156,10 @@ class GlobalController extends GetxController {
         Obx(
           () => Column(
             children: [
-              !_isDownloadSuccess.value && !_isDownloading.value
+              !_isDownloadSuccess.value && !isDownloading.value
                   ? ElevatedButton(
                       onPressed: () {
-                        _isDownloading.value = true;
+                        isDownloading.value = true;
                         downloadFile();
                       },
                       style: ButtonStyle(
@@ -180,7 +184,7 @@ class GlobalController extends GetxController {
                       ),
                     )
                   : Container(),
-              !_isDownloadSuccess.value && _isDownloading.value
+              !_isDownloadSuccess.value && isDownloading.value
                   ? Padding(
                       padding: const EdgeInsets.only(bottom: 5),
                       child: LinearProgressIndicator(
@@ -231,6 +235,59 @@ class GlobalController extends GetxController {
         )
       ],
     );
+  }
+
+  checkForUpdates() async {
+    var result = await getLatestVersion();
+    if (result is int) {
+      if (result < 0) {
+        showUpdateDialog();
+      } else {
+        Get.defaultDialog(
+          radius: 10,
+          title: '提示',
+          titleStyle: const TextStyle(
+            fontSize: 17,
+            fontWeight: FontWeight.bold,
+          ),
+          content: const Text(
+            '您当前使用的是最新版本',
+            style: TextStyle(
+              fontSize: 14,
+            ),
+          ),
+          titlePadding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+          contentPadding: const EdgeInsets.fromLTRB(20, 3, 20, 10),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Get.back();
+              },
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(
+                  const Color(0xff1f2233),
+                ),
+                padding: MaterialStateProperty.all(
+                  const EdgeInsets.fromLTRB(30, 1, 30, 1),
+                ),
+                shape: MaterialStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+              ),
+              child: const Text(
+                '确定',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                ),
+              ),
+            )
+          ],
+        );
+      }
+    }
   }
 
   showGameCategoryDialog(
