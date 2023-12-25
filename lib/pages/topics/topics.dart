@@ -13,6 +13,7 @@ class Topics extends GetView<TopicsController> {
     return Obx(
       () => controller.topicsInfo.isNotEmpty
           ? RefreshLoadMoreIndicator(
+              removePadding: true,
               onLoadMore: () async {
                 if (controller.topicsData['is_last']) {
                   return LoadingMoreState.noData;

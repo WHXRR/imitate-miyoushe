@@ -5,7 +5,6 @@ import 'package:imitate_miyoushe/common/triple_like.dart';
 import 'package:imitate_miyoushe/common/image_preview_screen.dart';
 import 'package:imitate_miyoushe/common/cache_image.dart';
 import 'package:imitate_miyoushe/utils/text_highlighting.dart';
-import 'package:imitate_miyoushe/router/routes.dart';
 
 class HomeArticle extends StatefulWidget {
   final Map itemData;
@@ -221,17 +220,24 @@ class _HomeArticleState extends State<HomeArticle> {
                 : Container(),
             Wrap(
               children: List.from(widget.itemData['topics']).map((v) {
-                return Container(
-                  padding: const EdgeInsets.fromLTRB(5, 2, 5, 2),
-                  margin: const EdgeInsets.fromLTRB(0, 7, 10, 0),
-                  decoration: BoxDecoration(
-                    color: const Color(0xffedf6fc),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Text(
-                    v['name'],
-                    style:
-                        const TextStyle(color: Color(0xff00b2ff), fontSize: 10),
+                return InkWell(
+                  onTap: () {
+                    MyRouter.push(MyRouter.topics, {
+                      'id': v['id'],
+                    });
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.fromLTRB(5, 2, 5, 2),
+                    margin: const EdgeInsets.fromLTRB(0, 7, 10, 0),
+                    decoration: BoxDecoration(
+                      color: const Color(0xffedf6fc),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Text(
+                      v['name'],
+                      style: const TextStyle(
+                          color: Color(0xff00b2ff), fontSize: 10),
+                    ),
                   ),
                 );
               }).toList(),

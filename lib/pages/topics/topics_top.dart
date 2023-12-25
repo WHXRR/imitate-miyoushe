@@ -32,61 +32,67 @@ class TopicsTop extends GetView<TopicsController> {
             ),
           ),
         ),
-        Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            toolbarHeight: 40,
-            elevation: 0,
-            title: const Text(
-              '话题',
-            ),
-            centerTitle: true,
+        Positioned(
+          top: Get.mediaQuery.padding.top,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          child: Scaffold(
             backgroundColor: Colors.transparent,
-          ),
-          body: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
-                  children: [
-                    SizedBox(
-                      width: 60,
-                      height: 60,
-                      child: CircleAvatar(
-                        backgroundColor: Colors.transparent,
-                        backgroundImage: Image.network(
-                                controller.topicsInfo['topic']['cover'])
-                            .image,
+            appBar: AppBar(
+              toolbarHeight: 40,
+              elevation: 0,
+              title: const Text(
+                '话题',
+              ),
+              centerTitle: true,
+              backgroundColor: Colors.transparent,
+            ),
+            body: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 60,
+                        height: 60,
+                        child: CircleAvatar(
+                          backgroundColor: Colors.transparent,
+                          backgroundImage: Image.network(
+                                  controller.topicsInfo['topic']['cover'])
+                              .image,
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      controller.topicsInfo['topic']['name'],
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                      const SizedBox(
+                        width: 10,
                       ),
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  controller.topicsInfo['topic']['desc'],
-                  style: const TextStyle(
-                    color: Colors.white70,
-                    fontSize: 15,
+                      Text(
+                        controller.topicsInfo['topic']['name'],
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
+                    ],
                   ),
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                )
-              ],
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    controller.topicsInfo['topic']['desc'],
+                    style: const TextStyle(
+                      color: Colors.white70,
+                      fontSize: 15,
+                    ),
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                  )
+                ],
+              ),
             ),
           ),
         )

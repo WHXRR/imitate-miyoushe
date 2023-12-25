@@ -16,6 +16,7 @@ class RefreshLoadMoreIndicator extends StatefulWidget {
   final Future<LoadingMoreState> Function() onLoadMore;
   final Function(BuildContext, int) itemBuilder;
   final Future<void> Function() onRefresh;
+  final bool removePadding;
 
   const RefreshLoadMoreIndicator({
     Key? key,
@@ -23,6 +24,7 @@ class RefreshLoadMoreIndicator extends StatefulWidget {
     required this.itemBuilder,
     required this.onLoadMore,
     required this.onRefresh,
+    this.removePadding = false,
   }) : super(key: key);
 
   @override
@@ -98,34 +100,44 @@ class _RefreshLoadMoreIndicatorState extends State<RefreshLoadMoreIndicator> {
     });
   }
 
+  listView() {
+    return ListView.builder(
+      controller: _scrollController,
+      itemCount: widget.itemCount + 1,
+      physics: const AlwaysScrollableScrollPhysics(),
+      itemBuilder: (context, index) {
+        if (index == widget.itemCount) {
+          if (_loadingMoreState == LoadingMoreState.loading) {
+            return _buildFootView("正在加载...");
+          } else if (_loadingMoreState == LoadingMoreState.complete) {
+            return _buildFootView("加载完成");
+          } else if (_loadingMoreState == LoadingMoreState.fail) {
+            return _buildFootView('加载失败');
+          } else if (_loadingMoreState == LoadingMoreState.noData) {
+            return _buildFootView('已经到底啦');
+          } else {
+            return Container();
+          }
+        }
+        // 依然还是用使用者给的 item 布局，只是在此之前我们做了关于 footView 的处理。
+        return widget.itemBuilder(context, index);
+      },
+    );
+  }
+
   Widget build(BuildContext context) {
     return Stack(
       children: [
         RefreshIndicator(
           onRefresh: widget.onRefresh,
           child: Scrollbar(
-            child: ListView.builder(
-              controller: _scrollController,
-              itemCount: widget.itemCount + 1,
-              physics: const AlwaysScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                if (index == widget.itemCount) {
-                  if (_loadingMoreState == LoadingMoreState.loading) {
-                    return _buildFootView("正在加载...");
-                  } else if (_loadingMoreState == LoadingMoreState.complete) {
-                    return _buildFootView("加载完成");
-                  } else if (_loadingMoreState == LoadingMoreState.fail) {
-                    return _buildFootView('加载失败');
-                  } else if (_loadingMoreState == LoadingMoreState.noData) {
-                    return _buildFootView('已经到底啦');
-                  } else {
-                    return Container();
-                  }
-                }
-                // 依然还是用使用者给的 item 布局，只是在此之前我们做了关于 footView 的处理。
-                return widget.itemBuilder(context, index);
-              },
-            ),
+            child: widget.removePadding
+                ? MediaQuery.removePadding(
+                    context: context,
+                    removeTop: true,
+                    child: listView(),
+                  )
+                : listView(),
           ),
         ),
         Positioned(

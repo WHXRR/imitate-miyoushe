@@ -17,7 +17,7 @@ class TopicsController extends GetxController {
       '/topic/api/getTopicFullInfo',
       params: {
         'gids': '${globalController.currentGameCategory['id']}',
-        'id': Get.arguments['id'],
+        'id': '${Get.arguments['id']}',
       },
     );
     topicsInfo.value = res['data'];
@@ -27,7 +27,7 @@ class TopicsController extends GetxController {
   Future<LoadingMoreState> getTopicsData() async {
     var params = {
       'gids': '${globalController.currentGameCategory['id']}',
-      'topic_id': Get.arguments['id'],
+      'topic_id': '${Get.arguments['id']}',
       'list_type': '${listType.value}',
       'page_size': '20',
       'game_id': '${currentGameID.value}',

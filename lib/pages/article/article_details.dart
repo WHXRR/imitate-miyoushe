@@ -8,6 +8,7 @@ import 'package:imitate_miyoushe/common/article_details_triple_like.dart';
 import 'article_details_user.dart';
 import 'article_details_comment.dart';
 import 'package:imitate_miyoushe/common/cache_image.dart';
+import 'package:imitate_miyoushe/router/routes.dart';
 
 class ArticleDetails extends GetView<ArticleDetailsController> {
   const ArticleDetails({Key? key}) : super(key: key);
@@ -119,17 +120,24 @@ class ArticleDetails extends GetView<ArticleDetailsController> {
                       Wrap(
                         children: List.from(controller.articleData['topics'])
                             .map((v) {
-                          return Container(
-                            padding: const EdgeInsets.fromLTRB(5, 2, 5, 2),
-                            margin: const EdgeInsets.fromLTRB(0, 7, 10, 0),
-                            decoration: BoxDecoration(
-                              color: const Color(0xffedf6fc),
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: Text(
-                              v['name'],
-                              style: const TextStyle(
-                                  color: Color(0xff00b2ff), fontSize: 10),
+                          return InkWell(
+                            onTap: () {
+                              MyRouter.push(MyRouter.topics, {
+                                'id': v['id'],
+                              });
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.fromLTRB(5, 2, 5, 2),
+                              margin: const EdgeInsets.fromLTRB(0, 7, 10, 0),
+                              decoration: BoxDecoration(
+                                color: const Color(0xffedf6fc),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: Text(
+                                v['name'],
+                                style: const TextStyle(
+                                    color: Color(0xff00b2ff), fontSize: 10),
+                              ),
                             ),
                           );
                         }).toList(),

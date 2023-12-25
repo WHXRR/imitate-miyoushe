@@ -170,17 +170,24 @@ class UserPost extends StatelessWidget {
                 : Container(),
             Wrap(
               children: List.from(itemData['topics']).map((v) {
-                return Container(
-                  padding: const EdgeInsets.fromLTRB(5, 2, 5, 2),
-                  margin: const EdgeInsets.fromLTRB(0, 7, 10, 0),
-                  decoration: BoxDecoration(
-                    color: const Color(0xffedf6fc),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Text(
-                    v['name'],
-                    style:
-                        const TextStyle(color: Color(0xff00b2ff), fontSize: 10),
+                return InkWell(
+                  onTap: () {
+                    MyRouter.push(MyRouter.topics, {
+                      'id': v['id'],
+                    });
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.fromLTRB(5, 2, 5, 2),
+                    margin: const EdgeInsets.fromLTRB(0, 7, 10, 0),
+                    decoration: BoxDecoration(
+                      color: const Color(0xffedf6fc),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Text(
+                      v['name'],
+                      style: const TextStyle(
+                          color: Color(0xff00b2ff), fontSize: 10),
+                    ),
                   ),
                 );
               }).toList(),
