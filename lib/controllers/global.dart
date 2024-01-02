@@ -237,6 +237,7 @@ class GlobalController extends GetxController {
     );
   }
 
+  // 检查更新对话框
   checkForUpdates() async {
     var result = await getLatestVersion();
     if (result is int) {
@@ -250,14 +251,31 @@ class GlobalController extends GetxController {
             fontSize: 17,
             fontWeight: FontWeight.bold,
           ),
-          content: const Text(
-            '您当前使用的是最新版本',
-            style: TextStyle(
-              fontSize: 14,
-            ),
-          ),
           titlePadding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
           contentPadding: const EdgeInsets.fromLTRB(20, 3, 20, 10),
+          content: Column(
+            children: [
+              Text(
+                '当前版本${packageVersion.value}',
+                style: const TextStyle(
+                  color: Color.fromARGB(255, 173, 174, 175),
+                  fontSize: 10,
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Text(
+                '您当前使用的是最新版本',
+                style: TextStyle(
+                  fontSize: 14,
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
           actions: [
             ElevatedButton(
               onPressed: () {
